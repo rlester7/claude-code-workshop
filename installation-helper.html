@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Helper - Claude Code Workshop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000;
+            --bg-dark: #0a0a0a;
+            --bg-card: #111;
+            --bg-container: #0d0d0d;
+            --white: #fff;
+            --green: #1DB954;
+            --green-dim: rgba(29, 185, 84, 0.15);
+            --gray: #888;
+            --gray-dark: #333;
+            --gray-border: #222;
+            --container-border: #1a1a1a;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        /* Main container */
+        .app-container {
+            width: 100%;
+            max-width: 700px;
+            height: calc(100vh - 28px);
+            max-height: 1000px;
+            background: var(--bg-container);
+            border: 2px solid var(--container-border);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 0 80px rgba(29, 185, 84, 0.05);
+        }
+
+        /* Header */
+        .header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-link {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--white);
+        }
+
+        .header-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .header-title span {
+            color: var(--green);
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--gray-border);
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Chat area */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .message {
+            max-width: 85%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            align-self: flex-end;
+        }
+
+        .message.assistant {
+            align-self: flex-start;
+        }
+
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .message.user .message-bubble {
+            background: transparent;
+            border: 2px solid var(--green);
+            color: var(--white);
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.assistant .message-bubble {
+            background: var(--bg-card);
+            border: 1px solid var(--gray-border);
+            color: var(--white);
+            border-bottom-left-radius: 4px;
+        }
+
+        .message-bubble code {
+            font-family: 'SF Mono', 'Monaco', monospace;
+            background: var(--green-dim);
+            color: var(--green);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .message-bubble pre {
+            background: var(--bg-dark);
+            border: 1px solid var(--gray-border);
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .message-bubble pre code {
+            background: none;
+            padding: 0;
+            font-size: 11px;
+            color: var(--green);
+        }
+
+        /* Markdown styles */
+        .message-bubble h1,
+        .message-bubble h2,
+        .message-bubble h3 {
+            font-weight: 700;
+            margin: 12px 0 8px 0;
+            color: var(--white);
+        }
+
+        .message-bubble h1 { font-size: 18px; }
+        .message-bubble h2 { font-size: 16px; }
+        .message-bubble h3 { font-size: 14px; }
+
+        .message-bubble p {
+            margin: 8px 0;
+        }
+
+        .message-bubble p:first-child {
+            margin-top: 0;
+        }
+
+        .message-bubble p:last-child {
+            margin-bottom: 0;
+        }
+
+        .message-bubble ul,
+        .message-bubble ol {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .message-bubble li {
+            margin: 4px 0;
+        }
+
+        .message-bubble strong {
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .message-bubble em {
+            font-style: italic;
+        }
+
+        .message-bubble a {
+            color: var(--green);
+            text-decoration: none;
+        }
+
+        .message-bubble a:hover {
+            text-decoration: underline;
+        }
+
+        .message-bubble blockquote {
+            border-left: 3px solid var(--green);
+            padding-left: 12px;
+            margin: 8px 0;
+            color: var(--gray);
+        }
+
+        .message-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 5px;
+            color: var(--gray);
+        }
+
+        .message.user .message-label {
+            text-align: right;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+        }
+
+        .typing-indicator span {
+            width: 7px;
+            height: 7px;
+            background: var(--gray);
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-4px); opacity: 1; }
+        }
+
+        /* Welcome message */
+        .welcome {
+            text-align: center;
+            padding: 32px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .welcome h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .welcome h2 span {
+            color: var(--green);
+        }
+
+        .welcome p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .quick-question {
+            background: var(--bg-card);
+            border: 1px solid var(--gray-border);
+            border-radius: 16px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-question:hover {
+            border-color: var(--green);
+            background: var(--green-dim);
+        }
+
+        /* Input area */
+        .input-area {
+            padding: 16px 20px 20px;
+            border-top: 1px solid var(--gray-border);
+            flex-shrink: 0;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        .message-input {
+            flex: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--gray-border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            color: var(--white);
+            resize: none;
+            min-height: 46px;
+            max-height: 120px;
+            transition: border-color 0.2s;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+
+        .message-input::placeholder {
+            color: var(--gray-dark);
+        }
+
+        .send-button {
+            background: var(--green);
+            border: none;
+            border-radius: 12px;
+            width: 46px;
+            height: 46px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .send-button:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .send-button svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--black);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 12px 20px;
+            text-align: center;
+            border-top: 1px solid var(--gray-border);
+            flex-shrink: 0;
+        }
+
+        .footer a {
+            color: var(--gray);
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: var(--green);
+        }
+
+        /* Error state */
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin: 8px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+            }
+
+            .app-container {
+                max-width: 100%;
+                height: 100vh;
+                max-height: none;
+                border-radius: 0;
+                border: none;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .header-left {
+                justify-content: space-between;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header-left">
+                <a href="workshop-presentation.html" class="back-link">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M10.5 12.5L6 8l4.5-4.5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Back
+                </a>
+                <h1 class="header-title">Installation <span>Helper</span></h1>
+            </div>
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                <span>Ready to help</span>
+            </div>
+        </header>
+
+        <div class="chat-container" id="chatContainer">
+            <div class="welcome" id="welcomeMessage">
+                <h2>Need help with <span>installation</span>?</h2>
+                <p>Ask me anything about getting Claude Code up and running.</p>
+                <div class="quick-questions">
+                    <button class="quick-question" data-question="My password isn't showing when I type">Password not showing</button>
+                    <button class="quick-question" data-question="I'm getting 'command not found' error">Command not found</button>
+                    <button class="quick-question" data-question="The installer seems stuck, what should I do?">Installer stuck</button>
+                    <button class="quick-question" data-question="How do I sign in to Claude Code?">How to sign in</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <div class="input-wrapper">
+                <textarea
+                    class="message-input"
+                    id="messageInput"
+                    placeholder="Describe your issue..."
+                    rows="1"
+                ></textarea>
+                <button class="send-button" id="sendButton" disabled>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <a href="https://claude-code-guide-beta.vercel.app/" target="_blank">Full Claude Code Guide</a>
+        </footer>
+    </div>
+
+    <script>
+        // API key for Taskforce (internal Spotify use only)
+        const API_KEY = '7WyLt6phKKVs-2zdivGYK';
+        const API_URL = 'https://hendrix-genai.spotify.net/taskforce/openai/v1/chat/completions';
+
+        // System prompt with installation guide
+        const SYSTEM_PROMPT = `You are a friendly, concise installation helper for Claude Code at a Spotify workshop. Your job is to help non-technical marketing folks troubleshoot installation issues.
+
+## Installation Command
+\`\`\`bash
+curl -fsSL https://gist.githubusercontent.com/rlester7/89dd039a98121333dae739064c3f7225/raw/install.sh | bash
+\`\`\`
+
+## What Gets Installed
+- Homebrew (Mac package manager)
+- Google Cloud CLI
+- Claude Code
+
+## Common Issues & Solutions
+
+### Password Entry is Invisible
+This is normal! When typing your Mac password in Terminal, no characters appear (not even dots). Just type your password and press Enter.
+
+### "command not found" Error
+After installation, you need to restart Terminal:
+1. Press Cmd+Q to fully quit Terminal
+2. Reopen Terminal
+3. Try typing \`claude\` again
+
+If still not working, the PATH may not be set. Run:
+\`\`\`bash
+source ~/.zshrc
+\`\`\`
+
+### May Need to Run Installer Twice
+Sometimes the first run installs dependencies (like Homebrew) and the second run completes Claude Code installation. This is normal - just run the curl command again.
+
+### Installer Seems Stuck
+- Be patient - it's downloading dependencies
+- If truly stuck for 5+ minutes, press Ctrl+C to cancel
+- Run the installer again
+
+### Ctrl+C to Cancel
+If anything goes wrong or hangs, press Ctrl+C to stop the current process. You can always start over.
+
+### Sign In
+- When prompted, sign in with your @spotify.com email
+- A browser window will open for authentication
+- After signing in, return to Terminal
+
+## After Installation
+- Type \`claude\` to start Claude Code
+- Type \`/help\` to see all available commands
+- Type \`/resume\` to continue a previous session
+
+## Tips
+- Keep responses SHORT and actionable
+- Use code formatting for commands
+- Be encouraging - these are non-technical users
+- If unsure, suggest they raise their hand for a helper`;
+
+        // State
+        let messages = [];
+        let isLoading = false;
+
+        // DOM elements
+        const chatContainer = document.getElementById('chatContainer');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+
+        // Auto-resize textarea
+        messageInput.addEventListener('input', () => {
+            messageInput.style.height = 'auto';
+            messageInput.style.height = Math.min(messageInput.scrollHeight, 120) + 'px';
+            updateSendButton();
+        });
+
+        // Send on Enter (Shift+Enter for newline)
+        messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        sendButton.addEventListener('click', sendMessage);
+
+        // Quick questions
+        document.querySelectorAll('.quick-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                messageInput.value = btn.dataset.question;
+                sendMessage();
+            });
+        });
+
+        function updateSendButton() {
+            const hasMessage = messageInput.value.trim().length > 0;
+            sendButton.disabled = !hasMessage || isLoading;
+        }
+
+        function addMessage(role, content) {
+            // Hide welcome message
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'none';
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+
+            const label = document.createElement('div');
+            label.className = 'message-label';
+            label.textContent = role === 'user' ? 'You' : 'Helper';
+
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.innerHTML = formatMessage(content);
+
+            messageDiv.appendChild(label);
+            messageDiv.appendChild(bubble);
+            chatContainer.appendChild(messageDiv);
+
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function formatMessage(content) {
+            // Use marked.js for full markdown rendering
+            return marked.parse(content);
+        }
+
+        function showTypingIndicator() {
+            const indicator = document.createElement('div');
+            indicator.className = 'message assistant';
+            indicator.id = 'typingIndicator';
+            indicator.innerHTML = `
+                <div class="message-label">Helper</div>
+                <div class="message-bubble">
+                    <div class="typing-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            `;
+            chatContainer.appendChild(indicator);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            chatContainer.appendChild(errorDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const content = messageInput.value.trim();
+
+            if (!content || isLoading) return;
+
+            isLoading = true;
+            updateSendButton();
+
+            // Add user message
+            addMessage('user', content);
+            messages.push({ role: 'user', content });
+
+            // Clear input
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'apikey': API_KEY
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-5.2',
+                        messages: [
+                            { role: 'system', content: SYSTEM_PROMPT },
+                            ...messages
+                        ],
+                        max_tokens: 1024,
+                        temperature: 0.7
+                    })
+                });
+
+                hideTypingIndicator();
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `Request failed: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const assistantContent = data.choices?.[0]?.message?.content;
+
+                if (assistantContent) {
+                    messages.push({ role: 'assistant', content: assistantContent });
+                    addMessage('assistant', assistantContent);
+                } else {
+                    throw new Error('No response from assistant');
+                }
+
+            } catch (error) {
+                hideTypingIndicator();
+                console.error('Error:', error);
+                showError(error.message || 'Something went wrong. Please try again.');
+            }
+
+            isLoading = false;
+            updateSendButton();
+        }
+
+        // Initial button state
+        updateSendButton();
+    </script>
+</body>
+</html>

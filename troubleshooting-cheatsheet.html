@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting Cheat Sheet | Claude Code Workshop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000;
+            --white: #fff;
+            --gray-100: #e5e5e5;
+            --gray-200: #333;
+            --gray-300: #444;
+            --gray-400: #666;
+            --gray-500: #888;
+            --gray-800: #1a1a1a;
+            --gray-900: #111;
+            --green: #1DB954;
+            --green-dark: rgba(29, 185, 84, 0.15);
+            --orange: #E07B39;
+            --orange-dark: rgba(224, 123, 57, 0.15);
+            --red: #ef4444;
+            --red-dark: rgba(239, 68, 68, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            padding: 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--gray-500);
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 48px 0 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--green);
+        }
+
+        h2 .emoji {
+            font-size: 28px;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 20px 0 12px;
+            color: var(--white);
+        }
+
+        p {
+            margin-bottom: 12px;
+            color: var(--gray-500);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--gray-900);
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--white);
+        }
+
+        .card-title .icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .card-title .icon.red {
+            background: var(--red-dark);
+            color: var(--red);
+        }
+
+        .card-title .icon.orange {
+            background: var(--orange-dark);
+            color: var(--orange);
+        }
+
+        .card-title .icon.green {
+            background: var(--green-dark);
+            color: var(--green);
+        }
+
+        .card p, .card li {
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+
+        .solution {
+            background: var(--green-dark);
+            border-left: 3px solid var(--green);
+            padding: 14px 18px;
+            margin-top: 14px;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+            color: var(--white);
+        }
+
+        .solution strong {
+            color: var(--green);
+            display: block;
+            margin-bottom: 6px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--gray-800);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--green);
+        }
+
+        .code-block {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--gray-800);
+            border: 2px solid var(--gray-200);
+            color: var(--green);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin: 16px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .quick-ref {
+            background: var(--gray-900);
+            border: 2px solid var(--green);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 32px 0;
+        }
+
+        .quick-ref h3 {
+            color: var(--green);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .quick-ref-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .quick-ref-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quick-ref-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .quick-ref-key {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: var(--gray-800);
+            border: 1px solid var(--gray-300);
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: var(--green);
+            white-space: nowrap;
+        }
+
+        .quick-ref-desc {
+            font-size: 14px;
+            color: var(--gray-100);
+        }
+
+        .prereq-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .prereq-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 16px;
+            color: var(--gray-100);
+        }
+
+        .prereq-list li:last-child {
+            border-bottom: none;
+        }
+
+        .prereq-check {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--gray-300);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .warning {
+            background: var(--orange-dark);
+            border-left: 3px solid var(--orange);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+            font-size: 15px;
+            color: var(--white);
+        }
+
+        .warning strong {
+            color: var(--orange);
+        }
+
+        .steps {
+            counter-reset: step;
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .steps li {
+            counter-increment: step;
+            padding: 14px 0;
+            padding-left: 48px;
+            position: relative;
+            border-bottom: 1px solid var(--gray-200);
+            font-size: 16px;
+            color: var(--gray-100);
+        }
+
+        .steps li:last-child {
+            border-bottom: none;
+        }
+
+        .steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 14px;
+            width: 28px;
+            height: 28px;
+            background: var(--green);
+            color: var(--black);
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 2px solid var(--gray-200);
+            text-align: center;
+            color: var(--gray-500);
+            font-size: 16px;
+        }
+
+        footer a {
+            color: var(--green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Troubleshooting Cheat Sheet</h1>
+        <p class="subtitle">Claude Code Workshop | Helpers Reference</p>
+    </header>
+
+    <section class="quick-ref">
+        <h3>Terminal Survival Commands</h3>
+        <div class="quick-ref-grid">
+            <div class="quick-ref-item">
+                <span class="quick-ref-key">Ctrl + C</span>
+                <span class="quick-ref-desc">Cancel/stop anything</span>
+            </div>
+            <div class="quick-ref-item">
+                <span class="quick-ref-key">Cmd + Q</span>
+                <span class="quick-ref-desc">Quit Terminal completely</span>
+            </div>
+            <div class="quick-ref-item">
+                <span class="quick-ref-key">Cmd + +</span>
+                <span class="quick-ref-desc">Increase text size</span>
+            </div>
+            <div class="quick-ref-item">
+                <span class="quick-ref-key">Cmd + -</span>
+                <span class="quick-ref-desc">Decrease text size</span>
+            </div>
+            <div class="quick-ref-item">
+                <span class="quick-ref-key">Cmd + K</span>
+                <span class="quick-ref-desc">Clear screen</span>
+            </div>
+            <div class="quick-ref-item">
+                <span class="quick-ref-key">↑ / ↓</span>
+                <span class="quick-ref-desc">Previous/next command</span>
+            </div>
+        </div>
+    </section>
+
+    <h2><span class="emoji">📋</span> Pre-Flight Checklist</h2>
+    <p>Before the workshop, attendees should have:</p>
+    <ul class="prereq-list">
+        <li><span class="prereq-check"></span> Joined "Claude Code Users" group in Band Manager</li>
+        <li><span class="prereq-check"></span> Mac laptop (required)</li>
+        <li><span class="prereq-check"></span> @spotify.com email ready for sign-in</li>
+        <li><span class="prereq-check"></span> 3-5 images saved locally for their presentation topic</li>
+        <li><span class="prereq-check"></span> Admin password for their Mac (may be needed for Homebrew)</li>
+    </ul>
+
+    <h2><span class="emoji">🚨</span> Common Installation Issues</h2>
+
+    <div class="grid">
+        <div class="card">
+            <p class="card-title">
+                <span class="icon red">!</span>
+                "Password not showing when I type"
+            </p>
+            <p>When Terminal asks for a password, nothing appears on screen — no dots, no asterisks, nothing. This is normal security behavior.</p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Just type the password and press Enter. It's being entered even though you can't see it.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon red">!</span>
+                "command not found: claude"
+            </p>
+            <p>After installation completes, typing <code>claude</code> shows "command not found".</p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Quit Terminal completely (<code>Cmd + Q</code>) and reopen it. The PATH needs to reload.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon red">!</span>
+                "Homebrew not found" or install seems stuck
+            </p>
+            <p>The installer may pause or ask to install Homebrew (a Mac package manager).</p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Follow the prompts. If it stops, run the install command again — it will resume where it left off.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon red">!</span>
+                Installer asks to run twice
+            </p>
+            <p>Sometimes Homebrew needs a second pass to complete setup.</p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Totally normal. Just run the curl command again. It won't reinstall everything — it will pick up where it left off.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon red">!</span>
+                PATH not configured correctly
+            </p>
+            <p>If <code>claude</code> still doesn't work after restarting Terminal.</p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Run these two commands:
+            </div>
+            <div class="code-block">echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc</div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon red">!</span>
+                Browser doesn't open for sign-in
+            </p>
+            <p>Claude Code should open a browser window for authentication.</p>
+            <div class="solution">
+                <strong>Solution</strong>
+                If it doesn't open automatically, look for a URL in the Terminal output and copy/paste it into a browser. Sign in with @spotify.com email.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon orange">⚠</span>
+                "Permission denied" errors
+            </p>
+            <p>Mac security may block Terminal from accessing certain folders.</p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Go to System Preferences → Privacy & Security → Full Disk Access → Add Terminal. May require restarting Terminal.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon orange">⚠</span>
+                Process seems frozen/stuck
+            </p>
+            <p>Installation appears to hang with no progress.</p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Wait 30 seconds. If still stuck, press <code>Ctrl + C</code> to cancel, then run the install command again.
+            </div>
+        </div>
+    </div>
+
+    <h2><span class="emoji">🔧</span> During the Workshop</h2>
+
+    <div class="grid">
+        <div class="card">
+            <p class="card-title">
+                <span class="icon green">?</span>
+                "How do I open Terminal?"
+            </p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Press <code>Cmd + Space</code> to open Spotlight, type "Terminal", press Enter.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon green">?</span>
+                "What folder am I in?"
+            </p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Type <code>pwd</code> (print working directory) and press Enter.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon green">?</span>
+                "How do I get to my Desktop?"
+            </p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Type <code>cd ~/Desktop</code> and press Enter.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon green">?</span>
+                "How do I add my images?"
+            </p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Drag image files directly from Finder into the Terminal window. The file path will be pasted automatically.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon green">?</span>
+                "Claude is asking for permission"
+            </p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Use arrow keys to select an option, then press Enter. For the workshop, "Yes" is usually the right choice.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon green">?</span>
+                "How do I exit Claude Code?"
+            </p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Type <code>/exit</code> or press <code>Ctrl + C</code> twice. Or just close the Terminal window.
+            </div>
+        </div>
+    </div>
+
+    <h2><span class="emoji">📦</span> What the Installer Does</h2>
+    <p>For context, here's what gets installed:</p>
+    <ol class="steps">
+        <li><strong>Homebrew</strong> — Mac package manager (if not already installed)</li>
+        <li><strong>Google Cloud CLI</strong> — For Spotify authentication</li>
+        <li><strong>Claude Code</strong> — The main CLI tool</li>
+        <li><strong>Spotify configuration</strong> — Connects Claude Code to Spotify's systems</li>
+        <li><strong>Custom skills</strong> — Including <code>/create-presentation-site</code></li>
+    </ol>
+
+    <div class="warning">
+        <strong>Important:</strong> The full installation can take 5-10 minutes depending on network speed and whether Homebrew needs to be installed. Be patient!
+    </div>
+
+    <h2><span class="emoji">🆘</span> Escape Hatches</h2>
+    <div class="grid">
+        <div class="card">
+            <p class="card-title">
+                <span class="icon red">!</span>
+                Something went very wrong
+            </p>
+            <p>If Terminal is completely unresponsive or showing errors you can't fix:</p>
+            <div class="solution">
+                <strong>Nuclear Option</strong>
+                Close Terminal, reopen it, and start fresh. The install command is idempotent — running it again won't break anything.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon orange">⚠</span>
+                Attendee can't get it working
+            </p>
+            <p>If someone is truly stuck and holding up their experience:</p>
+            <div class="solution">
+                <strong>Fallback</strong>
+                Have them watch the demo and follow along visually. They can pair with a neighbor to see it in action. The install is saved — they can try again at home.
+            </div>
+        </div>
+    </div>
+
+    <h2><span class="emoji">🎯</span> The Install Command</h2>
+    <p>For quick copy/paste:</p>
+    <div class="code-block">curl -fsSL https://gist.githubusercontent.com/rlester7/89dd039a98121333dae739064c3f7225/raw/install.sh | bash</div>
+
+    <h2><span class="emoji">📚</span> Helpful Commands Reference</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>Navigation</h3>
+            <p><code>cd ~/Desktop</code> — Go to Desktop</p>
+            <p><code>cd ..</code> — Go up one folder</p>
+            <p><code>ls</code> — List files in current folder</p>
+            <p><code>pwd</code> — Show current folder path</p>
+        </div>
+        <div class="card">
+            <h3>Claude Code</h3>
+            <p><code>claude</code> — Start Claude Code</p>
+            <p><code>/create-presentation-site</code> — Launch presentation skill</p>
+            <p><code>/resume</code> — Continue previous session</p>
+            <p><code>/help</code> — Show available commands</p>
+            <p><code>/exit</code> — Exit Claude Code</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>Full reference: <a href="https://claude-code-guide-beta.vercel.app/" target="_blank">claude-code-guide-beta.vercel.app</a></p>
+    </footer>
+</body>
+</html>
