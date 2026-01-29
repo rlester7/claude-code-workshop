@@ -506,6 +506,26 @@
             transform: scale(1.05);
         }
 
+        /* Helper link */
+        .helper-link {
+            display: inline-block;
+            margin-top: 32px;
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid var(--gray);
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 100px;
+            transition: all 0.2s;
+        }
+
+        .helper-link:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
         /* Split layout */
         .split-layout {
             display: grid;
@@ -646,7 +666,7 @@
                     <span>Copy</span>
                 </button>
             </div>
-            <p class="body gray">Let it run while I show you something cool.</p>
+            <a href="installation-helper.html" target="_blank" class="helper-link">Need help? Chat with our install assistant</a>
         </div>
     </section>
 
@@ -769,6 +789,7 @@
                     <p class="faq-a">Press <code>Ctrl+C</code> to cancel.</p>
                 </div>
             </div>
+            <a href="installation-helper.html" target="_blank" class="helper-link">Still stuck? Chat with our install assistant</a>
         </div>
     </section>
 
