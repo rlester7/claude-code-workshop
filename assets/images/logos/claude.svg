@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="20" fill="#D4A574"/>
+  <g transform="translate(50,50)">
+    <g fill="#3D2E1E">
+      <!-- Starburst rays -->
+      <ellipse cx="0" cy="-22" rx="4" ry="12"/>
+      <ellipse cx="0" cy="22" rx="4" ry="12"/>
+      <ellipse cx="-22" cy="0" rx="12" ry="4"/>
+      <ellipse cx="22" cy="0" rx="12" ry="4"/>
+      <ellipse cx="-15" cy="-15" rx="4" ry="10" transform="rotate(-45 -15 -15)"/>
+      <ellipse cx="15" cy="15" rx="4" ry="10" transform="rotate(-45 15 15)"/>
+      <ellipse cx="15" cy="-15" rx="4" ry="10" transform="rotate(45 15 -15)"/>
+      <ellipse cx="-15" cy="15" rx="4" ry="10" transform="rotate(45 -15 15)"/>
+      <!-- Center -->
+      <circle cx="0" cy="0" r="8"/>
+    </g>
+  </g>
+</svg>

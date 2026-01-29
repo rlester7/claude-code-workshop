@@ -69,7 +69,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.88);
             z-index: 1;
         }
 
@@ -154,18 +154,18 @@
             background: #111;
             border: 3px solid var(--green);
             border-radius: 16px;
-            padding: 20px 24px;
+            padding: 24px 28px;
             margin: 32px auto;
-            max-width: 700px;
+            max-width: 900px;
             text-align: left;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
         }
 
         .command-box code {
             font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
-            font-size: clamp(11px, 1.4vw, 16px);
+            font-size: clamp(14px, 2vw, 22px);
             color: var(--green);
             word-break: break-all;
             line-height: 1.4;
@@ -202,6 +202,30 @@
             height: 16px;
         }
 
+        /* Logo comparison */
+        .logo-compare {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 64px;
+            margin-bottom: 56px;
+        }
+
+        .logo-compare img {
+            width: 280px;
+            height: 280px;
+        }
+
+        .logo-compare img.invert {
+            filter: invert(1) brightness(2);
+        }
+
+        .logo-compare .vs {
+            font-size: 64px;
+            font-weight: 900;
+            color: var(--gray);
+        }
+
         /* Key points inline */
         .key-points-row {
             display: flex;
@@ -236,12 +260,12 @@
 
         /* Compare columns */
         .compare {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
             margin-top: 40px;
             text-align: left;
-            max-width: 1000px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -283,33 +307,36 @@
             gap: 20px;
             margin-top: 32px;
             text-align: left;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .workflow-card {
             background: #111;
             border: 2px solid #222;
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 16px;
+            padding: 28px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 120px;
+            min-height: 140px;
         }
 
         .workflow-card h4 {
-            font-size: clamp(18px, 2.5vw, 28px);
+            font-size: clamp(22px, 3vw, 32px);
             font-weight: 900;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             color: var(--white);
         }
 
         .workflow-example {
             font-family: 'SF Mono', monospace;
-            font-size: clamp(12px, 1.4vw, 16px);
+            font-size: clamp(14px, 1.6vw, 18px);
             color: var(--green);
             background: rgba(29, 185, 84, 0.1);
-            padding: 10px 14px;
-            border-radius: 6px;
+            padding: 12px 16px;
+            border-radius: 8px;
             display: inline-block;
             margin-top: auto;
         }
@@ -321,23 +348,26 @@
             gap: 24px 48px;
             margin-top: 32px;
             text-align: left;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .faq-item {
             background: #111;
-            border-radius: 12px;
-            padding: 20px 24px;
+            border-radius: 16px;
+            padding: 24px 28px;
         }
 
         .faq-q {
-            font-size: clamp(16px, 2vw, 24px);
+            font-size: clamp(20px, 2.5vw, 30px);
             font-weight: 900;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             color: var(--white);
         }
 
         .faq-a {
-            font-size: clamp(14px, 1.6vw, 20px);
+            font-size: clamp(16px, 2vw, 24px);
             font-weight: 800;
             color: var(--gray);
             line-height: 1.4;
@@ -368,15 +398,15 @@
         }
 
         .step-num {
-            font-size: clamp(20px, 3vw, 36px);
+            font-size: clamp(28px, 4vw, 48px);
             font-weight: 900;
             color: var(--green);
-            min-width: 32px;
+            min-width: 48px;
             flex-shrink: 0;
         }
 
         .step-text {
-            font-size: clamp(16px, 2.5vw, 32px);
+            font-size: clamp(22px, 3vw, 40px);
             font-weight: 800;
         }
 
@@ -384,10 +414,10 @@
             font-family: 'SF Mono', monospace;
             background: #111;
             border: 2px solid #333;
-            border-radius: 6px;
-            padding: 6px 12px;
+            border-radius: 8px;
+            padding: 10px 16px;
             color: var(--green);
-            font-size: clamp(13px, 1.8vw, 22px);
+            font-size: clamp(18px, 2.2vw, 28px);
         }
 
         /* Tips */
@@ -398,23 +428,26 @@
             margin-top: 40px;
             text-align: left;
             align-items: start;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .tip {
             background: #111;
             border: 2px solid #222;
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 16px;
+            padding: 28px;
         }
 
         .tip h4 {
-            font-size: clamp(18px, 2.5vw, 28px);
+            font-size: clamp(22px, 3vw, 34px);
             font-weight: 900;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .tip p {
-            font-size: clamp(14px, 1.8vw, 20px);
+            font-size: clamp(16px, 2vw, 24px);
             font-weight: 800;
             color: var(--gray);
             line-height: 1.4;
@@ -480,6 +513,9 @@
             gap: 48px;
             align-items: center;
             text-align: left;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .split-layout img {
@@ -573,7 +609,7 @@
 </head>
 <body>
     <nav class="nav-dots" id="navDots"></nav>
-    <div class="slide-counter" id="slideCounter">01 / 14</div>
+    <div class="slide-counter" id="slideCounter">01 / 13</div>
 
     <!-- 1. Title -->
     <section class="slide">
@@ -614,21 +650,14 @@
         </div>
     </section>
 
-    <!-- 4. Demo (merged) -->
+    <!-- 4. Analogy -->
     <section class="slide">
         <div class="slide-content">
-            <p class="large">I made something for you.</p>
-            <p class="large">It took me <span class="green">3 minutes</span>.</p>
-            <div class="img-placeholder" style="margin-top: 40px;">
-                <p class="placeholder-label">[ Live Demo ]</p>
-                <p>Attendee visualization — names/teams from calendar invite</p>
+            <div class="logo-compare">
+                <img src="assets/images/logos/chatgpt-logo-transparent-background-free-png.webp" alt="ChatGPT" class="invert">
+                <span class="vs">vs</span>
+                <img src="assets/images/logos/Claude_AI_symbol.svg" alt="Claude">
             </div>
-        </div>
-    </section>
-
-    <!-- 5. Analogy (merged) -->
-    <section class="slide">
-        <div class="slide-content">
             <p class="medium"><span class="orange">ChatGPT</span> = emailing a stranger for advice.</p>
             <p class="medium" style="margin-top: 32px;"><span class="green">Claude Code</span> = a collaborator at your desk,</p>
             <p class="medium">looking at your screen.</p>
@@ -656,9 +685,10 @@
         </div>
     </section>
 
-    <!-- 7. Intern quote -->
+    <!-- 6. Intern quote -->
     <section class="slide">
         <div class="slide-content">
+            <img src="assets/images/gifs/Hacking Hacker Man GIF by PERFECTL00P.gif" alt="Hacker cat" class="slide-img" style="max-height: 35vh; margin-bottom: 32px;">
             <p class="medium">AI tools make you the manager of a</p>
             <p class="large"><span class="green">very fast</span>, <span class="orange">very literal</span></p>
             <p class="medium">intern.</p>
@@ -697,20 +727,20 @@
             <p class="large">Things you can do</p>
             <div class="workflow-grid">
                 <div class="workflow-card">
-                    <h4>Check against a brief</h4>
-                    <span class="workflow-example">"Review deck.pdf against brief.pdf"</span>
+                    <h4>Check work against the brief</h4>
+                    <span class="workflow-example">"Review presentation.pptx against strategic-brief.pdf and flag anything that doesn't align"</span>
                 </div>
                 <div class="workflow-card">
                     <h4>Decode vague feedback</h4>
-                    <span class="workflow-example">"What might 'more premium' mean?"</span>
+                    <span class="workflow-example">"The feedback is 'needs more energy.' Give me 3 specific ways I could interpret that for this campaign."</span>
                 </div>
                 <div class="workflow-card">
-                    <h4>Batch repetitive tasks</h4>
-                    <span class="workflow-example">"Rename all files to kebab-case"</span>
+                    <h4>Batch the grunt work</h4>
+                    <span class="workflow-example">"Rename all files in /assets to match this format: Campaign_Asset_Date"</span>
                 </div>
                 <div class="workflow-card">
-                    <h4>Build presentation sites</h4>
-                    <span class="workflow-example">/create-presentation-site</span>
+                    <h4>Presentation sites</h4>
+                    <span class="workflow-example">"Create a presentation site for this campaign concept"</span>
                 </div>
             </div>
         </div>
