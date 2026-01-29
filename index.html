@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code Workshop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000;
+            --white: #fff;
+            --green: #1DB954;
+            --orange: #E07B39;
+            --gray: #666;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 48px;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        .slide-content {
+            max-width: 90vw;
+            width: 100%;
+        }
+
+        /* Giant text */
+        .mega {
+            font-size: clamp(48px, 12vw, 140px);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+
+        .large {
+            font-size: clamp(32px, 7vw, 88px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        .medium {
+            font-size: clamp(24px, 4.5vw, 56px);
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .body {
+            font-size: clamp(18px, 2.5vw, 32px);
+            font-weight: 800;
+            line-height: 1.4;
+            letter-spacing: -0.01em;
+        }
+
+        .small {
+            font-size: clamp(14px, 1.8vw, 24px);
+            font-weight: 800;
+            line-height: 1.5;
+        }
+
+        .green { color: var(--green); }
+        .orange { color: var(--orange); }
+        .gray { color: var(--gray); }
+
+        /* Images */
+        .slide-img {
+            max-width: 60vw;
+            max-height: 45vh;
+            border-radius: 12px;
+            margin: 24px auto;
+            display: block;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+
+        .slide-img.large-img {
+            max-width: 75vw;
+            max-height: 55vh;
+        }
+
+        /* Image placeholder */
+        .img-placeholder {
+            background: #111;
+            border: 3px dashed #333;
+            border-radius: 12px;
+            padding: 32px;
+            margin: 24px auto;
+            max-width: 60vw;
+            color: var(--gray);
+            font-size: clamp(14px, 1.8vw, 20px);
+            font-weight: 800;
+        }
+
+        .placeholder-label {
+            font-size: clamp(11px, 1.2vw, 14px);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #444;
+            margin-bottom: 12px;
+        }
+
+        /* Command box */
+        .command-box {
+            background: #111;
+            border: 3px solid var(--green);
+            border-radius: 12px;
+            padding: 24px 32px;
+            margin: 32px auto;
+            max-width: 90vw;
+            text-align: left;
+        }
+
+        .command-box code {
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: clamp(12px, 1.8vw, 24px);
+            color: var(--green);
+            word-break: break-all;
+            line-height: 1.5;
+        }
+
+        /* Key points inline */
+        .key-points-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 48px;
+            flex-wrap: wrap;
+        }
+
+        .key-point-item {
+            text-align: center;
+            max-width: 320px;
+            background: #111;
+            border: 2px solid #222;
+            border-radius: 16px;
+            padding: 32px 24px;
+        }
+
+        .key-point-num {
+            font-size: clamp(24px, 3vw, 40px);
+            font-weight: 900;
+            color: var(--green);
+            margin-bottom: 16px;
+        }
+
+        .key-point-text {
+            font-size: clamp(16px, 2vw, 24px);
+            font-weight: 800;
+            line-height: 1.4;
+            color: var(--white);
+        }
+
+        /* Compare columns */
+        .compare {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 32px;
+            margin-top: 40px;
+            text-align: left;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .compare-col {
+            padding: 32px;
+            border-radius: 16px;
+        }
+
+        .compare-col.bad {
+            background: rgba(224, 123, 57, 0.1);
+            border: 3px solid var(--orange);
+        }
+
+        .compare-col.good {
+            background: rgba(29, 185, 84, 0.1);
+            border: 3px solid var(--green);
+        }
+
+        .compare-label {
+            font-size: clamp(12px, 1.4vw, 16px);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .compare-text {
+            font-size: clamp(18px, 2.5vw, 28px);
+            font-weight: 800;
+            line-height: 1.5;
+            color: var(--white);
+        }
+
+        /* Workflow cards */
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 32px;
+            text-align: left;
+        }
+
+        .workflow-card {
+            background: #111;
+            border: 2px solid #222;
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 120px;
+        }
+
+        .workflow-card h4 {
+            font-size: clamp(18px, 2.5vw, 28px);
+            font-weight: 900;
+            margin-bottom: 12px;
+            color: var(--white);
+        }
+
+        .workflow-example {
+            font-family: 'SF Mono', monospace;
+            font-size: clamp(12px, 1.4vw, 16px);
+            color: var(--green);
+            background: rgba(29, 185, 84, 0.1);
+            padding: 10px 14px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: auto;
+        }
+
+        /* FAQ grid */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px 48px;
+            margin-top: 32px;
+            text-align: left;
+        }
+
+        .faq-item {
+            background: #111;
+            border-radius: 12px;
+            padding: 20px 24px;
+        }
+
+        .faq-q {
+            font-size: clamp(16px, 2vw, 24px);
+            font-weight: 900;
+            margin-bottom: 8px;
+            color: var(--white);
+        }
+
+        .faq-a {
+            font-size: clamp(14px, 1.6vw, 20px);
+            font-weight: 800;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+
+        .faq-a code {
+            font-family: 'SF Mono', monospace;
+            color: var(--green);
+            background: rgba(29, 185, 84, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Steps */
+        .steps-compact {
+            margin-top: 32px;
+        }
+
+        .step-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .step-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-num {
+            font-size: clamp(20px, 3vw, 36px);
+            font-weight: 900;
+            color: var(--green);
+            min-width: 32px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: clamp(16px, 2.5vw, 32px);
+            font-weight: 800;
+        }
+
+        .step-code {
+            font-family: 'SF Mono', monospace;
+            background: #111;
+            border: 2px solid #333;
+            border-radius: 6px;
+            padding: 6px 12px;
+            color: var(--green);
+            font-size: clamp(13px, 1.8vw, 22px);
+        }
+
+        /* Tips */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 40px;
+            text-align: left;
+            align-items: start;
+        }
+
+        .tip {
+            background: #111;
+            border: 2px solid #222;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .tip h4 {
+            font-size: clamp(18px, 2.5vw, 28px);
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .tip p {
+            font-size: clamp(14px, 1.8vw, 20px);
+            font-weight: 800;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+
+        .tip code {
+            font-family: 'SF Mono', monospace;
+            color: var(--green);
+            background: rgba(29, 185, 84, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .tip-img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 16px;
+            border: 2px solid #333;
+        }
+
+        /* Takeaways */
+        .takeaways {
+            margin-top: 48px;
+        }
+
+        .takeaway {
+            font-size: clamp(24px, 4vw, 52px);
+            font-weight: 900;
+            margin: 24px 0;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            justify-content: center;
+        }
+
+        .takeaway .check {
+            color: var(--green);
+            font-size: clamp(28px, 4.5vw, 56px);
+        }
+
+        /* Resource link */
+        .resource-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 18px 36px;
+            background: var(--green);
+            color: var(--black);
+            text-decoration: none;
+            font-size: clamp(16px, 2.2vw, 28px);
+            font-weight: 900;
+            border-radius: 100px;
+            transition: transform 0.2s;
+        }
+
+        .resource-link:hover {
+            transform: scale(1.05);
+        }
+
+        /* Split layout */
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 48px;
+            align-items: center;
+            text-align: left;
+        }
+
+        .split-layout img {
+            max-width: 100%;
+            max-height: 50vh;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            object-fit: contain;
+        }
+
+        .split-layout .mega {
+            font-size: clamp(40px, 8vw, 100px);
+            margin-bottom: 24px;
+        }
+
+        /* Nav */
+        .nav-dots {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #333;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-dot.active {
+            background: var(--green);
+            transform: scale(1.5);
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            font-size: 14px;
+            font-weight: 800;
+            color: #333;
+            z-index: 100;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .compare,
+            .workflow-grid,
+            .faq-grid,
+            .tips-grid,
+            .split-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .key-points-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 24px;
+            }
+
+            .key-point-item {
+                max-width: 400px;
+                width: 100%;
+            }
+
+            .split-layout {
+                gap: 32px;
+            }
+
+            .split-layout .mega {
+                font-size: clamp(36px, 10vw, 80px);
+                text-align: center;
+            }
+
+            .steps-compact {
+                margin: 24px auto 0;
+            }
+
+            .nav-dots {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-dots" id="navDots"></nav>
+    <div class="slide-counter" id="slideCounter">01 / 14</div>
+
+    <!-- 1. Title -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="mega">Claude Code</p>
+            <p class="medium gray" style="margin-top: 16px;">Workshop</p>
+            <img src="assets/images/ClaudeCodeHero.png" alt="Claude Code welcome screen" class="slide-img" style="margin-top: 32px;">
+        </div>
+    </section>
+
+    <!-- 2. Tagline -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="large">AI that builds things</p>
+            <p class="large green">for you.</p>
+        </div>
+    </section>
+
+    <!-- 3. Install (merged) -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="large">Open Terminal. Paste this.</p>
+            <div class="command-box">
+                <code>curl -fsSL https://gist.githubusercontent.com/rlester7/89dd039a98121333dae739064c3f7225/raw/install.sh | bash</code>
+            </div>
+            <p class="body gray">Let it run while I show you something cool.</p>
+        </div>
+    </section>
+
+    <!-- 4. Demo (merged) -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="large">I made something for you.</p>
+            <p class="large">It took me <span class="green">3 minutes</span>.</p>
+            <div class="img-placeholder" style="margin-top: 40px;">
+                <p class="placeholder-label">[ Live Demo ]</p>
+                <p>Attendee visualization — names/teams from calendar invite</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Analogy (merged) -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="medium"><span class="orange">ChatGPT</span> = emailing a stranger for advice.</p>
+            <p class="medium" style="margin-top: 32px;"><span class="green">Claude Code</span> = a collaborator at your desk,</p>
+            <p class="medium">looking at your screen.</p>
+        </div>
+    </section>
+
+    <!-- 6. Key points (merged) -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="large">What makes it different</p>
+            <div class="key-points-row">
+                <div class="key-point-item">
+                    <p class="key-point-num">01</p>
+                    <p class="key-point-text">Works on your <span class="green">actual files</span></p>
+                </div>
+                <div class="key-point-item">
+                    <p class="key-point-num">02</p>
+                    <p class="key-point-text">It's an <span class="green">agent</span>, not just chat</p>
+                </div>
+                <div class="key-point-item">
+                    <p class="key-point-num">03</p>
+                    <p class="key-point-text">You don't need to be <span class="green">technical</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Intern quote -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="medium">AI tools make you the manager of a</p>
+            <p class="large"><span class="green">very fast</span>, <span class="orange">very literal</span></p>
+            <p class="medium">intern.</p>
+        </div>
+    </section>
+
+    <!-- 8. Be specific (merged) -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="large green">Be specific.</p>
+            <div class="compare">
+                <div class="compare-col bad">
+                    <p class="compare-label orange">Less helpful</p>
+                    <p class="compare-text">"Make this better"</p>
+                </div>
+                <div class="compare-col good">
+                    <p class="compare-label green">Much better</p>
+                    <p class="compare-text">"Review the headline. We want confident but not aggressive."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Control + permissions (merged) -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="large">You're always <span class="green">in control</span>.</p>
+            <p class="body gray" style="margin-top: 8px;">Claude asks before every action.</p>
+            <img src="assets/images/permissionsExample_ClaudeCode.webp" alt="Claude Code permission prompt" class="slide-img large-img" style="margin-top: 24px;">
+        </div>
+    </section>
+
+    <!-- 10. Workflows -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="large">Things you can do</p>
+            <div class="workflow-grid">
+                <div class="workflow-card">
+                    <h4>Check against a brief</h4>
+                    <span class="workflow-example">"Review deck.pdf against brief.pdf"</span>
+                </div>
+                <div class="workflow-card">
+                    <h4>Decode vague feedback</h4>
+                    <span class="workflow-example">"What might 'more premium' mean?"</span>
+                </div>
+                <div class="workflow-card">
+                    <h4>Batch repetitive tasks</h4>
+                    <span class="workflow-example">"Rename all files to kebab-case"</span>
+                </div>
+                <div class="workflow-card">
+                    <h4>Build presentation sites</h4>
+                    <span class="workflow-example">/create-presentation-site</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. Install check + troubleshooting (merged) -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="large green">Install done?</p>
+            <p class="body gray" style="margin-bottom: 24px;">Thumbs up when ready. If not:</p>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <p class="faq-q">Password not showing?</p>
+                    <p class="faq-a">Normal. Just type and hit Enter.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-q">"command not found"?</p>
+                    <p class="faq-a">Quit Terminal <code>⌘+Q</code> and reopen.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-q">Run twice?</p>
+                    <p class="faq-a">Totally fine. Just run it again.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-q">Need to bail?</p>
+                    <p class="faq-a">Press <code>Ctrl+C</code> to cancel.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. Let's build -->
+    <section class="slide">
+        <div class="slide-content">
+            <div class="split-layout">
+                <div>
+                    <p class="mega">Let's build.</p>
+                    <div class="steps-compact">
+                        <div class="step-row">
+                            <span class="step-num">1</span>
+                            <span class="step-text">Open Terminal</span>
+                        </div>
+                        <div class="step-row">
+                            <span class="step-num">2</span>
+                            <span class="step-code">cd ~/Desktop</span>
+                        </div>
+                        <div class="step-row">
+                            <span class="step-num">3</span>
+                            <span class="step-code">claude</span>
+                        </div>
+                        <div class="step-row">
+                            <span class="step-num">4</span>
+                            <span class="step-code">/create-presentation-site</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <img src="assets/images/NewTerminalAtFolder.png" alt="Open Terminal from Finder">
+                    <p class="small gray" style="margin-top: 16px; text-align: center;">Tip: Right-click folder → New Terminal at Folder</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 13. Pro tips -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="large">Pro tips</p>
+            <div class="tips-grid">
+                <div class="tip">
+                    <h4>Drag & drop</h4>
+                    <p>Drag images directly into the Terminal window. Claude will see them.</p>
+                </div>
+                <div class="tip">
+                    <h4>Let Claude interview you</h4>
+                    <p>Say "interview me about this project" to clarify your thinking.</p>
+                    <img src="assets/images/IronicQuestions.png" alt="Claude asking clarifying questions" class="tip-img">
+                </div>
+                <div class="tip">
+                    <h4>Resume later</h4>
+                    <p>Type <code>/resume</code> to pick up where you left off.</p>
+                    <p style="margin-top: 12px;">Type <code>/help</code> to see all commands.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 14. Wrap -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="mega green">Nice work.</p>
+            <div class="takeaways">
+                <div class="takeaway">
+                    <span class="check">✓</span>
+                    <span>You built a website</span>
+                </div>
+                <div class="takeaway">
+                    <span class="check">✓</span>
+                    <span>Without writing code</span>
+                </div>
+            </div>
+            <a href="https://claude-code-guide-beta.vercel.app/" target="_blank" class="resource-link">
+                Claude Code Guide →
+            </a>
+        </div>
+    </section>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const navDots = document.getElementById('navDots');
+        const slideCounter = document.getElementById('slideCounter');
+        const total = slides.length;
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => scrollTo(i);
+            navDots.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.nav-dot');
+
+        function scrollTo(i) {
+            slides[i].scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function update(i) {
+            slideCounter.textContent = `${String(i + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+            dots.forEach((d, j) => d.classList.toggle('active', j === i));
+        }
+
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) update(Array.from(slides).indexOf(e.target));
+            });
+        }, { threshold: 0.5 });
+
+        slides.forEach(s => obs.observe(s));
+
+        document.addEventListener('keydown', (e) => {
+            const curr = Array.from(dots).findIndex(d => d.classList.contains('active'));
+            if (['ArrowDown', 'ArrowRight', ' '].includes(e.key)) {
+                e.preventDefault();
+                if (curr < total - 1) scrollTo(curr + 1);
+            } else if (['ArrowUp', 'ArrowLeft'].includes(e.key)) {
+                e.preventDefault();
+                if (curr > 0) scrollTo(curr - 1);
+            }
+        });
+    </script>
+</body>
+</html>
