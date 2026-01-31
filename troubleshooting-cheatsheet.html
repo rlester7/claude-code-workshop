@@ -390,9 +390,25 @@
         <li><span class="prereq-check"></span> Admin password for their Mac (may be needed for Homebrew)</li>
     </ul>
 
+    <div class="warning" style="margin-bottom: 32px;">
+        <strong>IMPORTANT:</strong> The install script requires running 2-3 times. This is BY DESIGN! It installs one component at a time (Homebrew → gcloud → Claude Code), exiting after each so components can initialize. Just run the same curl command again each time it stops.
+    </div>
+
     <h2><span class="emoji">🚨</span> Common Installation Issues</h2>
 
     <div class="grid">
+        <div class="card">
+            <p class="card-title">
+                <span class="icon orange">⚠</span>
+                Script stopped/exited after running
+            </p>
+            <p>The script exits after installing each component. This is NORMAL and BY DESIGN, not a bug!</p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Run the same curl command again. Run 1 = Homebrew, Run 2 = gcloud, Run 3 = Claude Code + Skills + Vercel.
+            </div>
+        </div>
+
         <div class="card">
             <p class="card-title">
                 <span class="icon red">!</span>
@@ -420,24 +436,36 @@
         <div class="card">
             <p class="card-title">
                 <span class="icon red">!</span>
-                "Homebrew not found" or install seems stuck
+                gcloud auth - browser doesn't open
             </p>
-            <p>The installer may pause or ask to install Homebrew (a Mac package manager).</p>
+            <p>During gcloud authentication, a browser window should open automatically for sign-in.</p>
             <div class="solution">
                 <strong>Solution</strong>
-                Follow the prompts. If it stops, run the install command again — it will resume where it left off.
+                Look for a URL in Terminal starting with https://accounts.google.com — copy and paste it into your browser manually.
             </div>
         </div>
 
         <div class="card">
             <p class="card-title">
                 <span class="icon red">!</span>
-                Installer asks to run twice
+                gcloud auth - "Access Denied" or permission error
             </p>
-            <p>Sometimes Homebrew needs a second pass to complete setup.</p>
+            <p>User gets an error during Google authentication.</p>
             <div class="solution">
                 <strong>Solution</strong>
-                Totally normal. Just run the curl command again. It won't reinstall everything — it will pick up where it left off.
+                Make sure they've joined the "Claude Code Users" group in Band Manager first. Access can take a few hours to propagate.
+            </div>
+        </div>
+
+        <div class="card">
+            <p class="card-title">
+                <span class="icon red">!</span>
+                "gcloud not found" after first run
+            </p>
+            <p>The first run only installed Homebrew. gcloud hasn't been installed yet.</p>
+            <div class="solution">
+                <strong>Solution</strong>
+                Run the curl command again. The second run installs gcloud.
             </div>
         </div>
 
@@ -563,17 +591,15 @@ source ~/.zshrc</div>
     </div>
 
     <h2><span class="emoji">📦</span> What the Installer Does</h2>
-    <p>For context, here's what gets installed:</p>
+    <p>The script installs components one at a time, requiring 2-3 runs:</p>
     <ol class="steps">
-        <li><strong>Homebrew</strong> — Mac package manager (if not already installed)</li>
-        <li><strong>Google Cloud CLI</strong> — For Spotify authentication</li>
-        <li><strong>Claude Code</strong> — The main CLI tool</li>
-        <li><strong>Spotify configuration</strong> — Connects Claude Code to Spotify's systems</li>
-        <li><strong>Custom skills</strong> — Including <code>/create-presentation-site</code></li>
+        <li><strong>Run 1: Homebrew</strong> — Mac package manager (if not already installed). Script exits after this.</li>
+        <li><strong>Run 2: gcloud</strong> — Google Cloud CLI for Spotify authentication. Browser auth happens here. Script exits after this.</li>
+        <li><strong>Run 3: Claude Code + Skills + Vercel</strong> — The main CLI tool, custom skills (<code>/create-presentation-site</code>, <code>/frontend-design</code>), and Vercel CLI for deployment.</li>
     </ol>
 
     <div class="warning">
-        <strong>Important:</strong> The full installation can take 5-10 minutes depending on network speed and whether Homebrew needs to be installed. Be patient!
+        <strong>Important:</strong> The script exiting after each component is NORMAL. Just run the same curl command again. Full installation takes 5-10 minutes total across all runs.
     </div>
 
     <h2><span class="emoji">🆘</span> Escape Hatches</h2>

@@ -665,18 +665,33 @@
 curl -fsSL https://gist.githubusercontent.com/rlester7/89dd039a98121333dae739064c3f7225/raw/install.sh | bash
 \`\`\`
 
-## What Gets Installed
-- Homebrew (Mac package manager)
-- Google Cloud CLI
-- Claude Code
+## CRITICAL: The Script Requires Multiple Runs
+The install script installs components ONE AT A TIME and exits after each component. This is BY DESIGN, not a bug!
+
+**Run 1:** Installs Homebrew (package manager)
+**Run 2:** Installs gcloud (Google Cloud CLI for Spotify auth)
+**Run 3:** Installs Claude Code + Skills + Vercel CLI
+
+Users should run the SAME curl command 2-3 times until everything is installed. Each time it picks up where it left off.
+
+## What Gets Installed (in order)
+1. Homebrew (Mac package manager) - if not already installed
+2. gcloud (Google Cloud CLI for Spotify authentication)
+3. Claude Code itself
+4. Spotify/Vertex AI configuration
+5. Skills: \`/create-presentation-site\` and \`/frontend-design\`
+6. Vercel CLI (for deploying sites)
 
 ## Common Issues & Solutions
+
+### "The script stopped/exited" - THIS IS NORMAL
+The script exits after each component so it can initialize properly. Just run the same curl command again! This is the most common "issue" and it's not actually a problem.
 
 ### Password Entry is Invisible
 This is normal! When typing your Mac password in Terminal, no characters appear (not even dots). Just type your password and press Enter.
 
 ### "command not found" Error
-After installation, you need to restart Terminal:
+After installation completes all 3 runs, you need to restart Terminal:
 1. Press Cmd+Q to fully quit Terminal
 2. Reopen Terminal
 3. Try typing \`claude\` again
@@ -686,31 +701,38 @@ If still not working, the PATH may not be set. Run:
 source ~/.zshrc
 \`\`\`
 
-### May Need to Run Installer Twice
-Sometimes the first run installs dependencies (like Homebrew) and the second run completes Claude Code installation. This is normal - just run the curl command again.
-
 ### Installer Seems Stuck
 - Be patient - it's downloading dependencies
 - If truly stuck for 5+ minutes, press Ctrl+C to cancel
-- Run the installer again
+- Run the installer again - it will resume where it left off
 
 ### Ctrl+C to Cancel
 If anything goes wrong or hangs, press Ctrl+C to stop the current process. You can always start over.
 
-### Sign In
-- When prompted, sign in with your @spotify.com email
-- A browser window will open for authentication
-- After signing in, return to Terminal
+### gcloud Authentication Issues
+- A browser window should open automatically for Google sign-in
+- If it doesn't open, look for a URL in the Terminal output and copy/paste it into your browser
+- Sign in with your @spotify.com email
+- Click "Allow" when prompted
+- Return to Terminal after authenticating
 
-## After Installation
+### "gcloud not found" after installation
+Run the same curl command again - the first run likely just installed Homebrew and gcloud wasn't installed yet.
+
+### Browser Auth Window Doesn't Open
+Look in the Terminal for a URL that starts with https://accounts.google.com - copy and paste it into your browser manually.
+
+## After Installation (all 3 runs complete)
 - Type \`claude\` to start Claude Code
 - Type \`/help\` to see all available commands
 - Type \`/resume\` to continue a previous session
+- Type \`/create-presentation-site\` to build a website
 
 ## Tips
 - Keep responses SHORT and actionable
 - Use code formatting for commands
 - Be encouraging - these are non-technical users
+- Emphasize that running the script multiple times is NORMAL and expected
 - If unsure, suggest they raise their hand for a helper or message @rlester`;
 
         // State
