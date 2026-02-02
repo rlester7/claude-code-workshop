@@ -1086,10 +1086,20 @@
             <p class="body" style="margin-top: 32px;">You should see Claude Code start up!</p>
             <div class="warning-box" style="margin-top: 32px;">
                 <p>If you see "command not found":</p>
-                <p style="margin-top: 8px; color: var(--gray);">1. Restart Terminal (Cmd+Q, reopen)</p>
-                <p style="color: var(--gray);">2. Or reload your shell: <code style="background: rgba(29, 185, 84, 0.2); color: var(--green);">source ~/.zshrc</code></p>
-                <p style="color: var(--gray);">3. Still failing? Re-run the install command</p>
+                <p style="margin-top: 12px; color: var(--gray);">1. Restart Terminal (Cmd+Q, reopen)</p>
+                <p style="color: var(--gray);">2. Or reload your shell:</p>
             </div>
+            <div class="command-box" style="max-width: 400px; margin-top: 16px;">
+                <code id="reloadCommand">source ~/.zshrc</code>
+                <button class="copy-btn" onclick="copyCommand('reloadCommand', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy</span>
+                </button>
+            </div>
+            <p class="small gray" style="margin-top: 16px;">Still failing? Re-run the install command.</p>
         </div>
     </section>
 
