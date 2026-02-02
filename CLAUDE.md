@@ -6,8 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a static website for a Claude Code workshop targeting non-technical marketing folks at Spotify. It includes:
 
-- **workshop-presentation.html** - Main slide deck presentation (scroll-snap based)
-- **index.html** - Copy of workshop-presentation.html for Vercel root
+- **index.html** - Main slide deck presentation (30 slides, scroll-snap based)
 - **installation-helper.html** - AI-powered chatbot for installation troubleshooting (uses Spotify's Taskforce gateway with GPT-5.2)
 - **pre-work-email.html** - Email template to send before the workshop
 - **troubleshooting-cheatsheet.html** - Quick reference for workshop helpers
@@ -36,12 +35,6 @@ GitHub repo: https://github.com/rlester7/claude-code-workshop
 - API key embedded in HTML for internal Spotify use
 - Calls Taskforce endpoint: `https://hendrix-genai.spotify.net/taskforce/openai/v1/chat/completions`
 - System prompt contains full installation guide context
-
-### Keeping Files in Sync
-When editing `workshop-presentation.html`, always copy to `index.html`:
-```bash
-cp workshop-presentation.html index.html
-```
 
 ## Assets
 
