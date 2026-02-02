@@ -821,7 +821,7 @@
 </head>
 <body>
     <nav class="nav-dots" id="navDots"></nav>
-    <div class="slide-counter" id="slideCounter">01 / 29</div>
+    <div class="slide-counter" id="slideCounter">01 / 30</div>
 
     <!-- ============================================ -->
     <!-- SECTION 1: HOOK & SETUP (Slides 1-5) -->
@@ -948,29 +948,54 @@
         </div>
     </section>
 
-    <!-- 8. EDUCATION - Why It Stops -->
+    <!-- 8. EDUCATION - What is Homebrew? -->
     <section class="slide">
-        <span class="section-label">Good to know</span>
+        <span class="section-label">While it installs...</span>
         <div class="slide-content">
-            <p class="large">Why the script stops</p>
-            <p class="body gray" style="margin-top: 16px; max-width: 700px; margin-left: auto; margin-right: auto;">The install script installs components one at a time. After each one, it exits so the component can initialize.</p>
-            <div class="terminal-mockup" style="margin-top: 40px;">
-                <div class="terminal-header">
-                    <span class="terminal-dot red"></span>
-                    <span class="terminal-dot yellow"></span>
-                    <span class="terminal-dot green"></span>
+            <p class="large">What is Homebrew?</p>
+            <p class="body gray" style="margin-top: 16px;">The first thing being installed right now</p>
+            <div class="concept-list" style="margin-top: 40px;">
+                <div class="concept-item">
+                    <span class="concept-icon">🍺</span>
+                    <p class="concept-text">A package manager for Mac<span>It installs other software tools for you</span></p>
                 </div>
-                <div class="terminal-body">
-                    <p class="comment"># Run 1: Installs Homebrew</p>
-                    <p class="comment"># Run 2: Installs gcloud</p>
-                    <p class="comment"># Run 3: Installs Claude Code + Skills + Vercel</p>
-                    <p style="margin-top: 16px;"><span class="prompt">$</span> This is normal! Just run the same command again.</p>
+                <div class="concept-item">
+                    <span class="concept-icon">🧱</span>
+                    <p class="concept-text">Think of it as an app store for developer tools<span>We need it to install gcloud and Claude Code</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">⏳</span>
+                    <p class="concept-text">This can take a few minutes<span>It's downloading and setting things up</span></p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 9. COMMAND - Re-run (gcloud) -->
+    <!-- 9. EDUCATION - Why It Stops -->
+    <section class="slide">
+        <span class="section-label">Important</span>
+        <div class="slide-content">
+            <p class="large">The script will stop 3 times</p>
+            <p class="body gray" style="margin-top: 16px;">This is normal! Just run the same command again.</p>
+            <div class="key-points-row" style="margin-top: 40px;">
+                <div class="key-point-item" style="border-color: var(--green);">
+                    <p class="key-point-num">Run 1</p>
+                    <p class="key-point-text">Installs <span class="green">Homebrew</span></p>
+                </div>
+                <div class="key-point-item" style="border-color: var(--green);">
+                    <p class="key-point-num">Run 2</p>
+                    <p class="key-point-text">Installs <span class="green">gcloud</span></p>
+                </div>
+                <div class="key-point-item" style="border-color: var(--green);">
+                    <p class="key-point-num">Run 3</p>
+                    <p class="key-point-text">Installs <span class="green">Claude Code</span></p>
+                </div>
+            </div>
+            <p class="body" style="margin-top: 40px;">Each run, paste the <span class="orange">same command</span> again.</p>
+        </div>
+    </section>
+
+    <!-- 10. COMMAND - Re-run for gcloud -->
     <section class="slide">
         <span class="section-label">Installation Step 2</span>
         <div class="slide-content">
@@ -989,7 +1014,7 @@
         </div>
     </section>
 
-    <!-- 10. EDUCATION - What is gcloud? -->
+    <!-- 11. EDUCATION - What is gcloud? -->
     <section class="slide">
         <span class="section-label">While it installs...</span>
         <div class="slide-content">
@@ -1011,7 +1036,7 @@
         </div>
     </section>
 
-    <!-- 11. COMMAND - Browser Auth -->
+    <!-- 12. COMMAND - Browser Auth -->
     <section class="slide">
         <span class="section-label">Authentication</span>
         <div class="slide-content">
@@ -1035,7 +1060,7 @@
         </div>
     </section>
 
-    <!-- 12. EDUCATION - The Intern Analogy -->
+    <!-- 13. EDUCATION - The Intern Analogy -->
     <section class="slide">
         <span class="section-label">Key insight</span>
         <div class="slide-content">
@@ -1046,7 +1071,7 @@
         </div>
     </section>
 
-    <!-- 13. COMMAND - Re-run (Claude Code + Skills + Vercel) -->
+    <!-- 14. COMMAND - Re-run for Claude Code -->
     <section class="slide">
         <span class="section-label">Installation Step 3</span>
         <div class="slide-content">
@@ -1065,7 +1090,7 @@
         </div>
     </section>
 
-    <!-- 14. EDUCATION - Permissions -->
+    <!-- 15. EDUCATION - Permissions -->
     <section class="slide">
         <span class="section-label">Important</span>
         <div class="slide-content">
@@ -1075,7 +1100,7 @@
         </div>
     </section>
 
-    <!-- 15. COMMAND - Verify Installation -->
+    <!-- 16. COMMAND - Verify Installation -->
     <section class="slide">
         <span class="section-label">Verify</span>
         <div class="slide-content">
@@ -1110,7 +1135,7 @@
         </div>
     </section>
 
-    <!-- 16. EDUCATION - What Got Installed -->
+    <!-- 17. EDUCATION - What Got Installed -->
     <section class="slide">
         <span class="section-label">What you got</span>
         <div class="slide-content">
@@ -1131,7 +1156,7 @@
         </div>
     </section>
 
-    <!-- 17. TROUBLESHOOTING -->
+    <!-- 18. TROUBLESHOOTING -->
     <section class="slide">
         <span class="section-label">Troubleshooting</span>
         <div class="slide-content">
@@ -1163,7 +1188,7 @@
     <!-- SECTION 3: CORE CONCEPTS (Slides 18-23) -->
     <!-- ============================================ -->
 
-    <!-- 18. Be Specific -->
+    <!-- 19. Be Specific -->
     <section class="slide">
         <span class="section-label">Pro tip</span>
         <div class="slide-content">
@@ -1181,7 +1206,7 @@
         </div>
     </section>
 
-    <!-- 19. /resume Command -->
+    <!-- 20. /resume Command -->
     <section class="slide">
         <span class="section-label">Commands</span>
         <div class="slide-content">
@@ -1200,7 +1225,7 @@
         </div>
     </section>
 
-    <!-- 20. /plan Command -->
+    <!-- 21. /plan Command -->
     <section class="slide">
         <span class="section-label">Commands</span>
         <div class="slide-content">
@@ -1219,7 +1244,7 @@
         </div>
     </section>
 
-    <!-- 21. Uploading Images -->
+    <!-- 22. Uploading Images -->
     <section class="slide">
         <span class="section-label">Pro tip</span>
         <div class="slide-content">
@@ -1238,7 +1263,7 @@
         </div>
     </section>
 
-    <!-- 22. Context Window & Compacting -->
+    <!-- 23. Context Window & Compacting -->
     <section class="slide">
         <span class="section-label">Good to know</span>
         <div class="slide-content">
@@ -1257,7 +1282,7 @@
         </div>
     </section>
 
-    <!-- 23. Skills & Plugins -->
+    <!-- 24. Skills & Plugins -->
     <section class="slide">
         <span class="section-label">Features</span>
         <div class="slide-content">
@@ -1280,7 +1305,7 @@
     <!-- SECTION 4: HANDS-ON BUILD (Slides 24-26) -->
     <!-- ============================================ -->
 
-    <!-- 24. Let's Build -->
+    <!-- 25. Let's Build -->
     <section class="slide">
         <span class="section-label">Hands-on</span>
         <div class="slide-content">
@@ -1328,7 +1353,7 @@
         </div>
     </section>
 
-    <!-- 25. Run the Skill -->
+    <!-- 26. Run the Skill -->
     <section class="slide">
         <span class="section-label">Hands-on</span>
         <div class="slide-content">
@@ -1351,7 +1376,7 @@
         </div>
     </section>
 
-    <!-- 26. Workflows Grid -->
+    <!-- 27. Workflows Grid -->
     <section class="slide">
         <div class="slide-content">
             <p class="large">Things you can make</p>
@@ -1380,7 +1405,7 @@
     <!-- SECTION 5: BONUS/ADVANCED (Slides 27-29) -->
     <!-- ============================================ -->
 
-    <!-- 27. GitHub 101 -->
+    <!-- 28. GitHub 101 -->
     <section class="slide">
         <span class="section-label">Bonus</span>
         <div class="slide-content">
@@ -1403,7 +1428,7 @@
         </div>
     </section>
 
-    <!-- 28. Deploying Your Site -->
+    <!-- 29. Deploying Your Site -->
     <section class="slide">
         <span class="section-label">Bonus</span>
         <div class="slide-content">
@@ -1426,7 +1451,7 @@
         </div>
     </section>
 
-    <!-- 29. Wrap -->
+    <!-- 30. Wrap -->
     <section class="slide">
         <div class="slide-content">
             <p class="mega green">Nice work.</p>
