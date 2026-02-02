@@ -152,7 +152,7 @@
             font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
             font-size: clamp(14px, 2vw, 22px);
             color: var(--green);
-            white-space: nowrap;
+            word-break: break-all;
             line-height: 1.4;
             flex: 1;
         }
@@ -164,6 +164,8 @@
 
         .command-box.simple code {
             font-size: clamp(18px, 2.5vw, 32px);
+            word-break: normal;
+            white-space: nowrap;
         }
 
         .copy-btn {
@@ -856,8 +858,8 @@
                 <img src="assets/images/logos/Claude_AI_symbol.svg" alt="Claude">
             </div>
             <p class="medium"><span class="orange">ChatGPT</span> = emailing a stranger for advice.</p>
-            <p class="medium" style="margin-top: 32px;"><span class="green">Claude Code</span> = a collaborator at your desk,</p>
-            <p class="medium">looking at your screen.</p>
+            <p class="medium" style="margin-top: 32px;"><span class="green">Claude Code</span> = a collaborator in your computer,</p>
+            <p class="medium">working with you on your files.</p>
         </div>
     </section>
 
