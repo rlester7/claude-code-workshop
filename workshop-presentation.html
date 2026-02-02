@@ -1081,7 +1081,14 @@
         <div class="slide-content">
             <p class="large">Type this to check it worked:</p>
             <div class="command-box simple">
-                <code>claude</code>
+                <code id="verifyCommand">claude</code>
+                <button class="copy-btn" onclick="copyCommand('verifyCommand', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy</span>
+                </button>
             </div>
             <p class="body" style="margin-top: 32px;">You should see Claude Code start up!</p>
             <div class="warning-box" style="margin-top: 32px;">
@@ -1287,11 +1294,29 @@
                         </div>
                         <div class="step-row">
                             <span class="step-num">2</span>
-                            <span class="step-code">cd ~/Desktop</span>
+                            <div class="command-box" style="margin: 0; padding: 12px 16px; max-width: 280px;">
+                                <code id="cdCommand">cd ~/Desktop</code>
+                                <button class="copy-btn" onclick="copyCommand('cdCommand', this)" style="padding: 6px 10px; font-size: 12px;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    <span>Copy</span>
+                                </button>
+                            </div>
                         </div>
                         <div class="step-row">
                             <span class="step-num">3</span>
-                            <span class="step-code">claude</span>
+                            <div class="command-box" style="margin: 0; padding: 12px 16px; max-width: 200px;">
+                                <code id="claudeCommand">claude</code>
+                                <button class="copy-btn" onclick="copyCommand('claudeCommand', this)" style="padding: 6px 10px; font-size: 12px;">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    <span>Copy</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1309,7 +1334,14 @@
         <div class="slide-content">
             <p class="large">Type this command:</p>
             <div class="command-box simple">
-                <code>/create-presentation-site</code>
+                <code id="skillCommand">/create-presentation-site</code>
+                <button class="copy-btn" onclick="copyCommand('skillCommand', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy</span>
+                </button>
             </div>
             <p class="body gray" style="margin-top: 32px;">Claude will interview you about your topic,</p>
             <p class="body gray">then build a website for you.</p>
