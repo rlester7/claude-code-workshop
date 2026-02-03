@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reference - Claude Code Workshop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000;
+            --white: #fff;
+            --green: #1DB954;
+            --orange: #E07B39;
+            --gray: #666;
+            --gray-dark: #333;
+            --nav-height: 48px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            padding-top: var(--nav-height);
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            background: var(--black);
+            border-bottom: 1px solid #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            z-index: 1000;
+        }
+
+        .nav-tab {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            text-decoration: none;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-tab:hover {
+            color: var(--white);
+        }
+
+        .nav-tab.active {
+            color: var(--green);
+            border-bottom-color: var(--green);
+        }
+
+        .slide {
+            min-height: calc(100vh - var(--nav-height));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 48px;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        .slide-content {
+            max-width: 90vw;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Giant text */
+        .mega {
+            font-size: clamp(48px, 12vw, 140px);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+
+        .large {
+            font-size: clamp(32px, 7vw, 88px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        .medium {
+            font-size: clamp(24px, 4.5vw, 56px);
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .body {
+            font-size: clamp(18px, 2.5vw, 32px);
+            font-weight: 800;
+            line-height: 1.4;
+            letter-spacing: -0.01em;
+        }
+
+        .small {
+            font-size: clamp(14px, 1.8vw, 24px);
+            font-weight: 800;
+            line-height: 1.5;
+        }
+
+        .green { color: var(--green); }
+        .orange { color: var(--orange); }
+        .gray { color: var(--gray); }
+
+        /* Images */
+        .slide-img {
+            max-width: 60vw;
+            max-height: 45vh;
+            border-radius: 12px;
+            margin: 24px auto;
+            display: block;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+
+        .slide-img.large-img {
+            max-width: 75vw;
+            max-height: 55vh;
+        }
+
+        /* Info box */
+        .info-box {
+            background: rgba(29, 185, 84, 0.1);
+            border: 2px solid var(--green);
+            border-radius: 12px;
+            padding: 20px 28px;
+            margin: 24px auto;
+            max-width: 700px;
+            text-align: left;
+        }
+
+        .info-box p {
+            font-size: clamp(16px, 2vw, 22px);
+            font-weight: 700;
+            color: var(--white);
+            margin: 8px 0;
+        }
+
+        /* Skills preview */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 32px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .skill-card {
+            background: #111;
+            border: 2px solid var(--green);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: left;
+        }
+
+        .skill-name {
+            font-family: 'SF Mono', monospace;
+            font-size: clamp(16px, 2vw, 22px);
+            color: var(--green);
+            margin-bottom: 12px;
+        }
+
+        .skill-desc {
+            font-size: clamp(14px, 1.6vw, 18px);
+            font-weight: 700;
+            color: var(--gray);
+        }
+
+        /* Concept list */
+        .concept-list {
+            text-align: left;
+            max-width: 700px;
+            margin: 32px auto;
+        }
+
+        .concept-item {
+            background: #111;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .concept-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .concept-text {
+            font-size: clamp(16px, 2vw, 22px);
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.4;
+        }
+
+        .concept-text span {
+            color: var(--gray);
+            display: block;
+            font-size: clamp(14px, 1.6vw, 18px);
+            margin-top: 6px;
+        }
+
+        /* Nav */
+        .nav-dots {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #333;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-dot.active {
+            background: var(--green);
+            transform: scale(1.5);
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            font-size: 14px;
+            font-weight: 800;
+            color: #333;
+            z-index: 100;
+        }
+
+        /* Section label */
+        .section-label {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            z-index: 10;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-dots {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="index.html" class="nav-tab">Install</a>
+        <a href="workshop.html" class="nav-tab">Workshop</a>
+        <a href="reference.html" class="nav-tab active">Reference</a>
+    </nav>
+
+    <nav class="nav-dots" id="navDots"></nav>
+    <div class="slide-counter" id="slideCounter">01 / 10</div>
+
+    <!-- ============================================ -->
+    <!-- ACTIONABLE COMMANDS -->
+    <!-- ============================================ -->
+
+    <!-- 1. /resume Command -->
+    <section class="slide">
+        <span class="section-label">Commands</span>
+        <div class="slide-content">
+            <p class="large"><code style="background: transparent; padding: 0;">/resume</code></p>
+            <p class="body gray" style="margin-top: 16px;">Pick up where you left off</p>
+            <div class="concept-list" style="margin-top: 40px;">
+                <div class="concept-item">
+                    <span class="concept-icon">💾</span>
+                    <p class="concept-text">Every session is saved automatically<span>Claude remembers what you were working on</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">☕</span>
+                    <p class="concept-text">Great for lunch breaks or next-day continuation<span>Type /resume to see recent sessions</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. /plan Command -->
+    <section class="slide">
+        <span class="section-label">Commands</span>
+        <div class="slide-content">
+            <p class="large"><code style="background: transparent; padding: 0;">/plan</code></p>
+            <p class="body gray" style="margin-top: 16px;">For complex, multi-step tasks</p>
+            <div class="concept-list" style="margin-top: 40px;">
+                <div class="concept-item">
+                    <span class="concept-icon">🔍</span>
+                    <p class="concept-text">Claude researches first, then shows you the plan<span>You approve before any changes happen</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">📋</span>
+                    <p class="concept-text">Example: "Refactor our file naming convention"<span>Claude will map out the steps before executing</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Skills & Plugins -->
+    <section class="slide">
+        <span class="section-label">Features</span>
+        <div class="slide-content">
+            <p class="large">Skills</p>
+            <p class="body gray" style="margin-top: 16px;">Pre-built prompts that do complex things</p>
+            <div class="concept-list" style="margin-top: 40px;">
+                <div class="concept-item">
+                    <span class="concept-icon">/</span>
+                    <p class="concept-text">Type <code style="font-family: 'SF Mono', monospace; background: rgba(29,185,84,0.2); padding: 2px 6px; border-radius: 4px; color: var(--green);">/</code> to see available skills<span>Like shortcuts for common tasks</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">🛠️</span>
+                    <p class="concept-text">You already have custom skills installed<span>/create-presentation-site and /frontend-design</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. What Got Installed -->
+    <section class="slide">
+        <span class="section-label">Reference</span>
+        <div class="slide-content">
+            <p class="large">What got installed</p>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <p class="skill-name">/create-presentation-site</p>
+                    <p class="skill-desc">Build polished websites without code</p>
+                </div>
+                <div class="skill-card">
+                    <p class="skill-name">/frontend-design</p>
+                    <p class="skill-desc">Create distinctive UI designs</p>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 32px; text-align: center;">
+                <p style="color: var(--gray);"><strong style="color: var(--white);">Also installed:</strong> Vercel CLI - deploy your creations to the web instantly</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Context Window -->
+    <section class="slide">
+        <span class="section-label">Good to know</span>
+        <div class="slide-content">
+            <p class="large">Context window</p>
+            <p class="body gray" style="margin-top: 16px;">Your conversation has a size limit</p>
+            <div class="concept-list" style="margin-top: 40px;">
+                <div class="concept-item">
+                    <span class="concept-icon">📦</span>
+                    <p class="concept-text">Claude automatically compacts old messages when needed<span>You might see "compacting conversation..."</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">🔄</span>
+                    <p class="concept-text">If things get slow or confused, start fresh<span>Type "exit" then "claude" to begin a new session</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. GitHub 101 -->
+    <section class="slide">
+        <span class="section-label">Bonus</span>
+        <div class="slide-content">
+            <p class="large">GitHub 101</p>
+            <p class="body gray" style="margin-top: 16px;">What is version control?</p>
+            <div class="concept-list" style="margin-top: 40px;">
+                <div class="concept-item">
+                    <span class="concept-icon">💾</span>
+                    <p class="concept-text">Git = save points for your files<span>Like Google Docs revision history, but for code</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">☁️</span>
+                    <p class="concept-text">GitHub = where your code lives online<span>Share, collaborate, back up your work</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">🤖</span>
+                    <p class="concept-text">Claude can help: "create a new github repo and push this"<span>You don't need to learn the commands</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Deploying Your Site -->
+    <section class="slide">
+        <span class="section-label">Bonus</span>
+        <div class="slide-content">
+            <p class="large">Deploying Your Site</p>
+            <p class="body gray" style="margin-top: 16px;">Put it on the internet</p>
+            <div class="concept-list" style="margin-top: 40px;">
+                <div class="concept-item">
+                    <span class="concept-icon">📁</span>
+                    <p class="concept-text">Your HTML file is just a file on your computer<span>Only you can see it right now</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">🚀</span>
+                    <p class="concept-text">Vercel = a service that puts it on the internet<span>Get a real URL you can share</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">🤖</span>
+                    <p class="concept-text">Claude can deploy for you: "deploy this to Vercel"<span>(Vercel CLI was already installed by the script!)</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CLI EXPLANATIONS -->
+    <!-- ============================================ -->
+
+    <!-- 8. What is Terminal? -->
+    <section class="slide">
+        <span class="section-label">CLI Basics</span>
+        <div class="slide-content">
+            <p class="large">What is Terminal?</p>
+            <div class="concept-list">
+                <div class="concept-item">
+                    <span class="concept-icon">💬</span>
+                    <p class="concept-text">A text-based way to talk to your computer<span>Instead of clicking, you type commands</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">📝</span>
+                    <p class="concept-text">It looks intimidating but you're just running recipes<span>Copy, paste, press Enter. That's it.</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">🔐</span>
+                    <p class="concept-text">Password won't show when typing<span>That's normal security. Just type and hit Enter.</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. What is Homebrew? -->
+    <section class="slide">
+        <span class="section-label">CLI Basics</span>
+        <div class="slide-content">
+            <img src="assets/images/logos/homebrew-logo.png" alt="Homebrew" class="slide-img" style="max-height: 25vh; margin-bottom: 24px;">
+            <p class="large">What is Homebrew?</p>
+            <p class="body gray" style="margin-top: 16px;">Installed during the setup process</p>
+            <div class="concept-list" style="margin-top: 32px;">
+                <div class="concept-item">
+                    <span class="concept-icon">🍺</span>
+                    <p class="concept-text">A package manager for Mac<span>It installs other software tools for you</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">🧱</span>
+                    <p class="concept-text">Think of it as an app store for developer tools<span>We need it to install gcloud and Claude Code</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. What is gcloud? -->
+    <section class="slide">
+        <span class="section-label">CLI Basics</span>
+        <div class="slide-content">
+            <img src="assets/images/logos/google-cloud-logo.webp" alt="Google Cloud" class="slide-img" style="max-height: 20vh; margin-bottom: 24px;">
+            <p class="large">What is gcloud?</p>
+            <div class="concept-list">
+                <div class="concept-item">
+                    <span class="concept-icon">🔑</span>
+                    <p class="concept-text">Lets you log into your Spotify account<span>It's how Claude knows you're authorized</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">🔒</span>
+                    <p class="concept-text">Required so Claude can access Spotify tools<span>On your behalf, with your permissions</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">🌐</span>
+                    <p class="concept-text">One-time authentication<span>A browser window opens for sign-in</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const navDots = document.getElementById('navDots');
+        const slideCounter = document.getElementById('slideCounter');
+        const total = slides.length;
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => scrollTo(i);
+            navDots.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.nav-dot');
+
+        function scrollTo(i) {
+            slides[i].scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function update(i) {
+            slideCounter.textContent = `${String(i + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+            dots.forEach((d, j) => d.classList.toggle('active', j === i));
+        }
+
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) update(Array.from(slides).indexOf(e.target));
+            });
+        }, { threshold: 0.5 });
+
+        slides.forEach(s => obs.observe(s));
+
+        document.addEventListener('keydown', (e) => {
+            const curr = Array.from(dots).findIndex(d => d.classList.contains('active'));
+            if (['ArrowDown', 'ArrowRight', ' '].includes(e.key)) {
+                e.preventDefault();
+                if (curr < total - 1) scrollTo(curr + 1);
+            } else if (['ArrowUp', 'ArrowLeft'].includes(e.key)) {
+                e.preventDefault();
+                if (curr > 0) scrollTo(curr - 1);
+            }
+        });
+    </script>
+</body>
+</html>

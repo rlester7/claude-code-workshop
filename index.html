@@ -21,6 +21,7 @@
             --orange: #E07B39;
             --gray: #666;
             --gray-dark: #333;
+            --nav-height: 48px;
         }
 
         html {
@@ -33,10 +34,48 @@
             background: var(--black);
             color: var(--white);
             -webkit-font-smoothing: antialiased;
+            padding-top: var(--nav-height);
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            background: var(--black);
+            border-bottom: 1px solid #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            z-index: 1000;
+        }
+
+        .nav-tab {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            text-decoration: none;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-tab:hover {
+            color: var(--white);
+        }
+
+        .nav-tab.active {
+            color: var(--green);
+            border-bottom-color: var(--green);
         }
 
         .slide {
-            min-height: 100vh;
+            min-height: calc(100vh - var(--nav-height));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -821,8 +860,15 @@
     </style>
 </head>
 <body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <a href="index.html" class="nav-tab active">Install</a>
+        <a href="workshop.html" class="nav-tab">Workshop</a>
+        <a href="reference.html" class="nav-tab">Reference</a>
+    </nav>
+
     <nav class="nav-dots" id="navDots"></nav>
-    <div class="slide-counter" id="slideCounter">01 / 29</div>
+    <div class="slide-counter" id="slideCounter">01 / 16</div>
 
     <!-- ============================================ -->
     <!-- SECTION 1: HOOK & SETUP (Slides 1-5) -->
@@ -895,7 +941,18 @@
         </div>
     </section>
 
-    <!-- 6. ACTION - Join Bandmanager group -->
+    <!-- 6. Install Intro -->
+    <section class="slide">
+        <div class="slide-content">
+            <p class="large">Let's get you set up</p>
+            <p class="body gray" style="margin-top: 16px;">Follow these steps to install Claude Code</p>
+            <div class="info-box" style="margin-top: 40px; text-align: center;">
+                <p style="color: var(--gray);"><strong style="color: var(--white);">You'll run the same command 2-3 times.</strong> Each time it installs one component and stops. That's normal!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. ACTION - Join Bandmanager group -->
     <section class="slide">
         <span class="section-label">Action Required</span>
         <div class="slide-content">
@@ -938,57 +995,11 @@
         </div>
     </section>
 
-    <!-- 7. EDUCATION - Understanding Terminal -->
-    <section class="slide">
-        <span class="section-label">While it installs...</span>
-        <div class="slide-content">
-            <p class="large">What is Terminal?</p>
-            <div class="concept-list">
-                <div class="concept-item">
-                    <span class="concept-icon">💬</span>
-                    <p class="concept-text">A text-based way to talk to your computer<span>Instead of clicking, you type commands</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">📝</span>
-                    <p class="concept-text">It looks intimidating but you're just running recipes<span>Copy, paste, press Enter. That's it.</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">🔐</span>
-                    <p class="concept-text">Password won't show when typing<span>That's normal security. Just type and hit Enter.</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 8. EDUCATION - What is Homebrew? -->
-    <section class="slide">
-        <span class="section-label">While it installs...</span>
-        <div class="slide-content">
-            <img src="assets/images/logos/homebrew-logo.png" alt="Homebrew" class="slide-img" style="max-height: 25vh; margin-bottom: 24px;">
-            <p class="large">What is Homebrew?</p>
-            <p class="body gray" style="margin-top: 16px;">The first thing being installed right now</p>
-            <div class="concept-list" style="margin-top: 32px;">
-                <div class="concept-item">
-                    <span class="concept-icon">🍺</span>
-                    <p class="concept-text">A package manager for Mac<span>It installs other software tools for you</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">🧱</span>
-                    <p class="concept-text">Think of it as an app store for developer tools<span>We need it to install gcloud and Claude Code</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">⏳</span>
-                    <p class="concept-text">This can take a few minutes<span>It's downloading and setting things up</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 9. EDUCATION - Why It Stops -->
+    <!-- 8. Why It Stops - 3-run pattern -->
     <section class="slide">
         <span class="section-label">Important</span>
         <div class="slide-content">
-            <p class="large">The script will stop 3 times</p>
+            <p class="large">The script stops 3 times</p>
             <p class="body gray" style="margin-top: 16px;">This is normal! Just run the same command again.</p>
             <div class="key-points-row" style="margin-top: 32px;">
                 <div class="key-point-item" style="border-color: var(--green);">
@@ -1010,7 +1021,7 @@
         </div>
     </section>
 
-    <!-- 10. COMMAND - Re-run for gcloud -->
+    <!-- 9. COMMAND - Re-run for gcloud -->
     <section class="slide">
         <span class="section-label">Installation Step 2</span>
         <div class="slide-content">
@@ -1029,30 +1040,7 @@
         </div>
     </section>
 
-    <!-- 11. EDUCATION - What is gcloud? -->
-    <section class="slide">
-        <span class="section-label">While it installs...</span>
-        <div class="slide-content">
-            <img src="assets/images/logos/google-cloud-logo.webp" alt="Google Cloud" class="slide-img" style="max-height: 20vh; margin-bottom: 24px;">
-            <p class="large">What is gcloud?</p>
-            <div class="concept-list">
-                <div class="concept-item">
-                    <span class="concept-icon">🔑</span>
-                    <p class="concept-text">Lets you log into your Spotify account<span>It's how Claude knows you're authorized</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">🔒</span>
-                    <p class="concept-text">Required so Claude can access Spotify tools<span>On your behalf, with your permissions</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">🌐</span>
-                    <p class="concept-text">One-time authentication<span>A browser window will open soon...</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 12. COMMAND - Browser Auth -->
+    <!-- 8. COMMAND - Browser Auth -->
     <section class="slide">
         <span class="section-label">Authentication</span>
         <div class="slide-content">
@@ -1095,17 +1083,7 @@
         </div>
     </section>
 
-    <!-- 15. EDUCATION - Permissions -->
-    <section class="slide">
-        <span class="section-label">Important</span>
-        <div class="slide-content">
-            <p class="large">You're always <span class="green">in control</span>.</p>
-            <p class="body gray" style="margin-top: 8px;">Claude asks before every action.</p>
-            <img src="assets/images/permissionsExample_ClaudeCode.webp" alt="Claude Code permission prompt" class="slide-img large-img" style="margin-top: 24px;">
-        </div>
-    </section>
-
-    <!-- 16. COMMAND - Verify Installation -->
+    <!-- 10. COMMAND - Verify Installation -->
     <section class="slide">
         <span class="section-label">Verify</span>
         <div class="slide-content">
@@ -1121,14 +1099,18 @@
                 </button>
             </div>
             <p class="body" style="margin-top: 32px;">You should see Claude Code start up!</p>
-            <div class="warning-box" style="margin-top: 32px;">
-                <p>If you see "command not found":</p>
-                <p style="margin-top: 12px; color: var(--gray);">1. Restart Terminal (Cmd+Q, reopen)</p>
-                <p style="color: var(--gray);">2. Or reload your shell:</p>
-            </div>
-            <div class="command-box" style="max-width: 400px; margin-top: 16px;">
-                <code id="reloadCommand">source ~/.zshrc</code>
-                <button class="copy-btn" onclick="copyCommand('reloadCommand', this)">
+        </div>
+    </section>
+
+    <!-- 11. If Claude doesn't open -->
+    <section class="slide">
+        <span class="section-label">Troubleshooting</span>
+        <div class="slide-content">
+            <p class="large">If Claude doesn't open after installing...</p>
+            <p class="body gray" style="margin-top: 16px;">Run this command to fix your PATH:</p>
+            <div class="command-box" style="margin-top: 32px;">
+                <code id="pathFixCommand">echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc</code>
+                <button class="copy-btn" onclick="copyCommand('pathFixCommand', this)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -1136,32 +1118,11 @@
                     <span>Copy</span>
                 </button>
             </div>
-            <p class="small gray" style="margin-top: 16px;">Still failing? Re-run the install command.</p>
+            <p class="body" style="margin-top: 32px;">Then type <code style="font-family: 'SF Mono', monospace; background: rgba(29,185,84,0.2); padding: 4px 8px; border-radius: 4px; color: var(--green);">claude</code> to start!</p>
         </div>
     </section>
 
-    <!-- 17. EDUCATION - What Got Installed -->
-    <section class="slide">
-        <span class="section-label">What you got</span>
-        <div class="slide-content">
-            <p class="large">What (else) just got installed</p>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <p class="skill-name">/create-presentation-site</p>
-                    <p class="skill-desc">Build polished websites without code</p>
-                </div>
-                <div class="skill-card">
-                    <p class="skill-name">/frontend-design</p>
-                    <p class="skill-desc">Create distinctive UI designs</p>
-                </div>
-            </div>
-            <div class="info-box" style="margin-top: 32px; text-align: center;">
-                <p style="color: var(--gray);"><strong style="color: var(--white);">Also installed:</strong> Vercel CLI - deploy your creations to the web instantly</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 18. TROUBLESHOOTING -->
+    <!-- 12. TROUBLESHOOTING -->
     <section class="slide">
         <span class="section-label">Troubleshooting</span>
         <div class="slide-content">
@@ -1189,259 +1150,13 @@
         </div>
     </section>
 
-    <!-- ============================================ -->
-    <!-- SECTION 3: HANDS-ON BUILD -->
-    <!-- ============================================ -->
-
-    <!-- 19. Let's Build -->
-    <section class="slide">
-        <span class="section-label">Hands-on</span>
-        <div class="slide-content">
-            <div class="split-layout">
-                <div>
-                    <p class="mega">Let's build.</p>
-                    <div class="steps-compact">
-                        <div class="step-row">
-                            <span class="step-num">1</span>
-                            <span class="step-text">Open Terminal</span>
-                        </div>
-
-                        <div class="step-row">
-                            <span class="step-num">2</span>
-                            <div class="command-box" style="margin: 0; padding: 10px 16px; flex: 0 0 auto;">
-                                <code id="claudeCommand" style="white-space: nowrap;">claude</code>
-                                <button class="copy-btn" onclick="copyCommand('claudeCommand', this)" style="padding: 6px 10px; font-size: 12px;">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                    </svg>
-                                    <span>Copy</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="assets/images/NewTerminalAtFolder.png" alt="Open Terminal from Finder">
-                    <p class="small gray" style="margin-top: 16px; text-align: center;">Tip: Right-click folder → New Terminal at Folder</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 20. Run the Skill -->
-    <section class="slide">
-        <span class="section-label">Hands-on</span>
-        <div class="slide-content">
-            <p class="large">Type this command:</p>
-            <div class="command-box simple">
-                <code id="skillCommand">/create-presentation-site</code>
-                <button class="copy-btn" onclick="copyCommand('skillCommand', this)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                    <span>Copy</span>
-                </button>
-            </div>
-            <p class="body gray" style="margin-top: 32px;">Claude will interview you about your topic,</p>
-            <p class="body gray">then build a website with you.</p>
-            <div class="info-box" style="margin-top: 40px;">
-                <p><span class="icon">📸</span> Drag your images into the Terminal when prompted!</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 21. Workflows Grid -->
+    <!-- 13. Ready for Workshop -->
     <section class="slide">
         <div class="slide-content">
-            <p class="large">Things you can make</p>
-            <div class="workflow-grid">
-                <div class="workflow-card">
-                    <h4>Check work against the brief</h4>
-                    <span class="workflow-example">"Review presentation.pptx against strategic-brief.pdf and flag anything that doesn't align"</span>
-                </div>
-                <div class="workflow-card">
-                    <h4>Decode vague feedback</h4>
-                    <span class="workflow-example">"The feedback is 'needs more energy.' Give me 3 specific ways I could interpret that for this campaign."</span>
-                </div>
-                <div class="workflow-card">
-                    <h4>Batch the grunt work</h4>
-                    <span class="workflow-example">"Rename all files in /assets to match this format: Campaign_Asset_Date"</span>
-                </div>
-                <div class="workflow-card">
-                    <h4>Presentation sites</h4>
-                    <span class="workflow-example">"Create a presentation site for this campaign concept"</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================ -->
-    <!-- SECTION 4: CORE CONCEPTS -->
-    <!-- ============================================ -->
-
-    <!-- 22. /resume Command -->
-    <section class="slide">
-        <span class="section-label">Commands</span>
-        <div class="slide-content">
-            <p class="large"><code style="background: transparent; padding: 0;">/resume</code></p>
-            <p class="body gray" style="margin-top: 16px;">Pick up where you left off</p>
-            <div class="concept-list" style="margin-top: 40px;">
-                <div class="concept-item">
-                    <span class="concept-icon">💾</span>
-                    <p class="concept-text">Every session is saved automatically<span>Claude remembers what you were working on</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">☕</span>
-                    <p class="concept-text">Great for lunch breaks or next-day continuation<span>Type /resume to see recent sessions</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 23. /plan Command -->
-    <section class="slide">
-        <span class="section-label">Commands</span>
-        <div class="slide-content">
-            <p class="large"><code style="background: transparent; padding: 0;">/plan</code></p>
-            <p class="body gray" style="margin-top: 16px;">For complex, multi-step tasks</p>
-            <div class="concept-list" style="margin-top: 40px;">
-                <div class="concept-item">
-                    <span class="concept-icon">🔍</span>
-                    <p class="concept-text">Claude researches first, then shows you the plan<span>You approve before any changes happen</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">📋</span>
-                    <p class="concept-text">Example: "Refactor our file naming convention"<span>Claude will map out the steps before executing</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 24. Uploading Images -->
-    <section class="slide">
-        <span class="section-label">Pro tip</span>
-        <div class="slide-content">
-            <p class="large">Drag & drop images</p>
-            <p class="body gray" style="margin-top: 16px;">Drag images directly into the Terminal window.</p>
-            <div class="concept-list" style="margin-top: 40px;">
-                <div class="concept-item">
-                    <span class="concept-icon">🖼️</span>
-                    <p class="concept-text">Claude can see and understand them<span>Screenshots, photos, diagrams - all work</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">✨</span>
-                    <p class="concept-text">Great for: "recreate this design"<span>Or "what's wrong here?" or "extract the text"</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 25. Context Window & Compacting -->
-    <section class="slide">
-        <span class="section-label">Good to know</span>
-        <div class="slide-content">
-            <p class="large">Context window</p>
-            <p class="body gray" style="margin-top: 16px;">Your conversation has a size limit</p>
-            <div class="concept-list" style="margin-top: 40px;">
-                <div class="concept-item">
-                    <span class="concept-icon">📦</span>
-                    <p class="concept-text">Claude automatically compacts old messages when needed<span>You might see "compacting conversation..."</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">🔄</span>
-                    <p class="concept-text">If things get slow or confused, start fresh<span>Type "exit" then "claude" to begin a new session</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 26. Skills & Plugins -->
-    <section class="slide">
-        <span class="section-label">Features</span>
-        <div class="slide-content">
-            <p class="large">Skills</p>
-            <p class="body gray" style="margin-top: 16px;">Pre-built prompts that do complex things</p>
-            <div class="concept-list" style="margin-top: 40px;">
-                <div class="concept-item">
-                    <span class="concept-icon">/</span>
-                    <p class="concept-text">Type <code>/</code> to see available skills<span>Like shortcuts for common tasks</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">🛠️</span>
-                    <p class="concept-text">You already have custom skills installed<span>/create-presentation-site and /frontend-design</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================ -->
-    <!-- SECTION 5: BONUS/ADVANCED -->
-    <!-- ============================================ -->
-
-    <!-- 27. GitHub 101 -->
-    <section class="slide">
-        <span class="section-label">Bonus</span>
-        <div class="slide-content">
-            <p class="large">GitHub 101</p>
-            <p class="body gray" style="margin-top: 16px;">What is version control?</p>
-            <div class="concept-list" style="margin-top: 40px;">
-                <div class="concept-item">
-                    <span class="concept-icon">💾</span>
-                    <p class="concept-text">Git = save points for your files<span>Like Google Docs revision history, but for code</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">☁️</span>
-                    <p class="concept-text">GitHub = where your code lives online<span>Share, collaborate, back up your work</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">🤖</span>
-                    <p class="concept-text">Claude can help: "create a new github repo and push this"<span>You don't need to learn the commands</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 28. Deploying Your Site -->
-    <section class="slide">
-        <span class="section-label">Bonus</span>
-        <div class="slide-content">
-            <p class="large">Deploying Your Site</p>
-            <p class="body gray" style="margin-top: 16px;">Put it on the internet</p>
-            <div class="concept-list" style="margin-top: 40px;">
-                <div class="concept-item">
-                    <span class="concept-icon">📁</span>
-                    <p class="concept-text">Your HTML file is just a file on your computer<span>Only you can see it right now</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">🚀</span>
-                    <p class="concept-text">Vercel = a service that puts it on the internet<span>Get a real URL you can share</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">🤖</span>
-                    <p class="concept-text">Claude can deploy for you: "deploy this to Vercel"<span>(Vercel CLI was already installed by the script!)</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 29. Wrap -->
-    <section class="slide">
-        <div class="slide-content">
-            <p class="mega green">Nice work.</p>
-            <div class="takeaways">
-                <div class="takeaway">
-                    <span class="check">✓</span>
-                    <span>You built a website</span>
-                </div>
-                <div class="takeaway">
-                    <span class="check">✓</span>
-                    <span>Without writing code</span>
-                </div>
-            </div>
-            <a href="https://claude-code-guide-beta.vercel.app/" target="_blank" class="resource-link">
-                Claude Code Guide →
+            <p class="mega green">Ready!</p>
+            <p class="body gray" style="margin-top: 24px;">Installation complete. Let's start the workshop.</p>
+            <a href="workshop.html" class="resource-link" style="margin-top: 48px;">
+                Continue to Workshop →
             </a>
         </div>
     </section>
