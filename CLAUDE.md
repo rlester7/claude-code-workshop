@@ -13,12 +13,20 @@ This is a static website for a Claude Code workshop targeting non-technical mark
 
 ## Deployment
 
-Static files deployed to Vercel:
+### Primary: Snow (Spotify Internal)
+Use the `/snow-deploy` skill or run manually:
+```bash
+snow deploy --site-name claude-code-workshop-intro-non-tech --yes
+```
+
+Live URL: https://snow.spotify.net/s/claude-code-workshop-intro-non-tech
+
+### Backup: Vercel
 ```bash
 npx vercel --prod --yes
 ```
 
-Live URL: https://claude-code-workshop-flame.vercel.app/
+Backup URL: https://claude-code-workshop-flame.vercel.app/
 
 GitHub repo: https://github.com/rlester7/claude-code-workshop
 

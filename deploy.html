@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workshop - Claude Code</title>
+    <title>Deploy - Claude Code Workshop</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&display=swap" rel="stylesheet">
@@ -132,21 +132,6 @@
         .orange { color: var(--orange); }
         .gray { color: var(--gray); }
 
-        /* Images */
-        .slide-img {
-            max-width: 60vw;
-            max-height: 45vh;
-            border-radius: 12px;
-            margin: 24px auto;
-            display: block;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-        }
-
-        .slide-img.large-img {
-            max-width: 75vw;
-            max-height: 55vh;
-        }
-
         /* Command box */
         .command-box {
             background: #111;
@@ -211,6 +196,22 @@
             height: 16px;
         }
 
+        /* Warning box */
+        .warning-box {
+            background: rgba(224, 123, 57, 0.15);
+            border: 2px solid var(--orange);
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin: 24px auto;
+            max-width: 700px;
+        }
+
+        .warning-box p {
+            font-size: clamp(14px, 1.8vw, 20px);
+            font-weight: 700;
+            color: var(--orange);
+        }
+
         /* Info box */
         .info-box {
             background: rgba(29, 185, 84, 0.1);
@@ -232,76 +233,6 @@
         .info-box .icon {
             color: var(--green);
             margin-right: 8px;
-        }
-
-        /* Workflow cards */
-        .workflow-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 32px;
-            text-align: left;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .workflow-card {
-            background: #111;
-            border: 2px solid #222;
-            border-radius: 16px;
-            padding: 28px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 140px;
-        }
-
-        .workflow-card h4 {
-            font-size: clamp(22px, 3vw, 32px);
-            font-weight: 900;
-            margin-bottom: 16px;
-            color: var(--white);
-        }
-
-        .workflow-example {
-            font-family: 'SF Mono', monospace;
-            font-size: clamp(14px, 1.6vw, 18px);
-            color: var(--green);
-            background: rgba(29, 185, 84, 0.1);
-            padding: 12px 16px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-top: auto;
-        }
-
-        /* Steps */
-        .steps-compact {
-            margin-top: 32px;
-        }
-
-        .step-row {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 20px;
-        }
-
-        .step-row:last-child {
-            margin-bottom: 0;
-        }
-
-        .step-num {
-            font-size: clamp(28px, 4vw, 48px);
-            font-weight: 900;
-            color: var(--green);
-            min-width: 48px;
-            flex-shrink: 0;
-        }
-
-        .step-text {
-            font-size: clamp(22px, 3vw, 40px);
-            font-weight: 800;
         }
 
         /* Concept list */
@@ -340,26 +271,6 @@
             margin-top: 6px;
         }
 
-        /* Takeaways */
-        .takeaways {
-            margin-top: 48px;
-        }
-
-        .takeaway {
-            font-size: clamp(24px, 4vw, 52px);
-            font-weight: 900;
-            margin: 24px 0;
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            justify-content: center;
-        }
-
-        .takeaway .check {
-            color: var(--green);
-            font-size: clamp(28px, 4.5vw, 56px);
-        }
-
         /* Resource link */
         .resource-link {
             display: inline-block;
@@ -378,29 +289,15 @@
             transform: scale(1.05);
         }
 
-        /* Split layout */
-        .split-layout {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 48px;
-            align-items: center;
-            text-align: left;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
+        .resource-link.pulse {
+            animation: pulse-ring 2s ease-in-out infinite;
+            position: relative;
         }
 
-        .split-layout img {
-            max-width: 100%;
-            max-height: 50vh;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            object-fit: contain;
-        }
-
-        .split-layout .mega {
-            font-size: clamp(40px, 8vw, 100px);
-            margin-bottom: 24px;
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(29, 185, 84, 0.7), 0 0 20px rgba(29, 185, 84, 0.3); }
+            70% { box-shadow: 0 0 0 24px rgba(29, 185, 84, 0), 0 0 40px rgba(29, 185, 84, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(29, 185, 84, 0), 0 0 0 rgba(29, 185, 84, 0); }
         }
 
         /* Nav */
@@ -452,26 +349,83 @@
             z-index: 10;
         }
 
+        /* Screenshot images */
+        .screenshot {
+            display: block;
+            margin: 32px auto 0;
+            border-radius: 12px;
+            border: 2px solid #333;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .screenshot:hover {
+            transform: scale(1.02);
+            border-color: var(--green);
+        }
+
+        .screenshot-hint {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gray-dark);
+            margin-top: 12px;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 48px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 16px 64px rgba(0,0,0,0.8);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            background: #222;
+            border: 2px solid #444;
+            border-radius: 50%;
+            color: var(--white);
+            font-size: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .lightbox-close:hover {
+            background: var(--green);
+            border-color: var(--green);
+            color: var(--black);
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
-            .workflow-grid,
-            .split-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .split-layout {
-                gap: 32px;
-            }
-
-            .split-layout .mega {
-                font-size: clamp(36px, 10vw, 80px);
-                text-align: center;
-            }
-
-            .steps-compact {
-                margin: 24px auto 0;
-            }
-
             .nav-dots {
                 display: none;
             }
@@ -482,140 +436,77 @@
     <!-- Top Navigation -->
     <nav class="top-nav">
         <a href="index.html" class="nav-tab">Install</a>
-        <a href="workshop.html" class="nav-tab active">Workshop</a>
+        <a href="workshop.html" class="nav-tab">Workshop</a>
         <a href="reference.html" class="nav-tab">Reference</a>
-        <a href="deploy.html" class="nav-tab">Share (Deploy)</a>
+        <a href="deploy.html" class="nav-tab active">Share (Deploy)</a>
         <a href="installation-helper.html" class="nav-tab">Help</a>
     </nav>
 
     <nav class="nav-dots" id="navDots"></nav>
-    <div class="slide-counter" id="slideCounter">01 / 07</div>
+    <div class="slide-counter" id="slideCounter">01 / 05</div>
 
-    <!-- ============================================ -->
-    <!-- WORKSHOP: SHOW & TELL + HANDS-ON -->
-    <!-- ============================================ -->
-
-    <!-- 1. Things you can make (Show & Tell) -->
+    <!-- 1. Deploy Your Site -->
     <section class="slide">
-        <span class="section-label">Show & Tell</span>
         <div class="slide-content">
-            <p class="large">Things you can make</p>
-            <div class="workflow-grid">
-                <div class="workflow-card">
-                    <h4>Check work against the brief</h4>
-                    <span class="workflow-example">"Review presentation.pptx against strategic-brief.pdf and flag anything that doesn't align"</span>
-                </div>
-                <div class="workflow-card">
-                    <h4>Decode vague feedback</h4>
-                    <span class="workflow-example">"The feedback is 'needs more energy.' Give me 3 specific ways I could interpret that for this campaign."</span>
-                </div>
-                <div class="workflow-card">
-                    <h4>Batch the grunt work</h4>
-                    <span class="workflow-example">"Rename all files in /assets to match this format: Campaign_Asset_Date"</span>
-                </div>
-                <div class="workflow-card">
-                    <h4>Presentation sites</h4>
-                    <span class="workflow-example">"Create a presentation site for this campaign concept"</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 2. Permissions - You're in control -->
-    <section class="slide">
-        <span class="section-label">Before we build</span>
-        <div class="slide-content">
-            <p class="large">You're always <span class="green">in control</span>.</p>
-            <p class="body gray" style="margin-top: 8px;">Claude asks before every action.</p>
-            <img src="assets/images/permissionsExample_ClaudeCode.webp" alt="Claude Code permission prompt" class="slide-img large-img" style="margin-top: 24px;">
-        </div>
-    </section>
-
-    <!-- 3. Drag & drop images -->
-    <section class="slide">
-        <span class="section-label">Pro tip</span>
-        <div class="slide-content">
-            <p class="large">Drag & drop images</p>
-            <p class="body gray" style="margin-top: 16px;">Drag images directly into the Terminal window.</p>
-            <div class="concept-list" style="margin-top: 40px;">
-                <div class="concept-item">
-                    <span class="concept-icon">🖼️</span>
-                    <p class="concept-text">Claude can see and understand them<span>Screenshots, photos, diagrams - all work</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">✨</span>
-                    <p class="concept-text">Great for: "recreate this design"<span>Or "what's wrong here?" or "extract the text"</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. Copy as Pathname -->
-    <section class="slide">
-        <span class="section-label">Pro tip</span>
-        <div class="slide-content">
-            <p class="large">Copy as Pathname</p>
-            <p class="body gray" style="margin-top: 16px;">Get any file's path with a right-click</p>
+            <p class="large">Deploying Your Site</p>
+            <p class="body gray" style="margin-top: 16px;">Put it on the internet</p>
             <div class="concept-list" style="margin-top: 40px;">
                 <div class="concept-item">
                     <span class="concept-icon">📁</span>
-                    <p class="concept-text">Right-click any file in Finder<span>Hold Option key → "Copy as Pathname"</span></p>
+                    <p class="concept-text">Your HTML file is just a file on your computer<span>Only you can see it right now</span></p>
                 </div>
                 <div class="concept-item">
-                    <span class="concept-icon">📋</span>
-                    <p class="concept-text">Paste the path into Claude<span>"Read /Users/you/Documents/file.pdf"</span></p>
+                    <span class="concept-icon">🚀</span>
+                    <p class="concept-text">Snow = Spotify's internal static hosting<span>Get a real URL you can share within Spotify</span></p>
                 </div>
-            </div>
-            <div class="info-box" style="margin-top: 32px; text-align: center;">
-                <p>Great for telling Claude exactly which file to work with!</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. Let's Build -->
-    <section class="slide">
-        <span class="section-label">Hands-on</span>
-        <div class="slide-content">
-            <div class="split-layout">
-                <div>
-                    <p class="mega">Let's build.</p>
-                    <div class="steps-compact">
-                        <div class="step-row">
-                            <span class="step-num">1</span>
-                            <span class="step-text">Open Terminal</span>
-                        </div>
-
-                        <div class="step-row">
-                            <span class="step-num">2</span>
-                            <div class="command-box" style="margin: 0; padding: 10px 16px; flex: 0 0 auto;">
-                                <code id="claudeCommand" style="white-space: nowrap;">claude</code>
-                                <button class="copy-btn" onclick="copyCommand('claudeCommand', this)" style="padding: 6px 10px; font-size: 12px;">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                    </svg>
-                                    <span>Copy</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="assets/images/NewTerminalAtFolder.png" alt="Open Terminal from Finder">
-                    <p class="small gray" style="margin-top: 16px; text-align: center;">Tip: Right-click folder → New Terminal at Folder</p>
+                <div class="concept-item">
+                    <span class="concept-icon">🤖</span>
+                    <p class="concept-text">Claude can deploy for you: <code style="font-family: 'SF Mono', monospace; background: rgba(29,185,84,0.2); padding: 2px 6px; border-radius: 4px; color: var(--green);">/snow-deploy</code><span>A few setup steps are needed first</span></p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 5. Run the Skill -->
+    <!-- 2. Open IT Portal -->
     <section class="slide">
-        <span class="section-label">Hands-on</span>
+        <span class="section-label">Step 1 of 4</span>
         <div class="slide-content">
-            <p class="large">Type this command:</p>
-            <div class="command-box simple">
-                <code id="skillCommand">/create-presentation-site</code>
-                <button class="copy-btn" onclick="copyCommand('skillCommand', this)">
+            <p class="large">Go to the <span class="green">IT Portal</span></p>
+            <p class="body gray" style="margin-top: 16px;">Click "Submit a Service Request"</p>
+            <img src="assets/images/snow-submit-service-request.png" alt="Submit a Service Request option on IT portal" class="screenshot" style="max-width: 600px; max-height: 30vh;">
+            <p class="screenshot-hint">Click image to enlarge</p>
+            <div style="margin-top: 32px;">
+                <a href="https://it.spotify.net/" target="_blank" class="resource-link pulse">
+                    Open IT Portal
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Fill out Access Request -->
+    <section class="slide">
+        <span class="section-label">Step 2 of 4</span>
+        <div class="slide-content">
+            <p class="large">Request access to <span class="green">"Tech"</span></p>
+            <p class="body gray" style="margin-top: 16px;">Select "Access Request", then choose "Tech" from the dropdown</p>
+            <img src="assets/images/snow-access-request-form.png" alt="Access Request form with Tech selected" class="screenshot" style="max-width: 500px; max-height: 45vh;">
+            <p class="screenshot-hint">Click image to enlarge</p>
+            <div class="warning-box" style="margin-top: 24px;">
+                <p>Requires manager approval - submit this ahead of time!</p>
+            </div>
+            <p class="small gray" style="margin-top: 16px;">This adds you to the <a href="https://backstage.spotify.net/bandmanager/tech@spotify.com" target="_blank" style="color: var(--green); text-decoration: none;">tech@spotify.com</a> group, which grants Snow deploy access.</p>
+        </div>
+    </section>
+
+    <!-- 4. Install the Snow Skill -->
+    <section class="slide">
+        <span class="section-label">Step 3 of 4</span>
+        <div class="slide-content">
+            <p class="large">Install the <span class="green">Snow skill</span></p>
+            <p class="body gray" style="margin-top: 16px;">Paste this into Claude Code - it will set everything up for you</p>
+            <div class="command-box" style="margin-top: 40px;">
+                <code id="installSkillCommand">Install the snow-deploy skill from https://ghe.spotify.net/ddrayne/claude-skills</code>
+                <button class="copy-btn" onclick="copyCommand('installSkillCommand', this)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -623,35 +514,71 @@
                     <span>Copy</span>
                 </button>
             </div>
-            <p class="body gray" style="margin-top: 32px;">Claude will interview you about your topic,</p>
-            <p class="body gray">then build a website with you.</p>
-            <div class="info-box" style="margin-top: 40px;">
-                <p><span class="icon">📸</span> Drag your images into the Terminal when prompted!</p>
+            <div class="info-box" style="margin-top: 32px;">
+                <p><span class="icon">✓</span> Claude will download and install the skill automatically</p>
+                <p><span class="icon">✓</span> Say "yes" when Claude asks for permission</p>
             </div>
         </div>
     </section>
 
-    <!-- 6. Nice work (Wrap) -->
+    <!-- 4. Deploy -->
     <section class="slide">
+        <span class="section-label">Step 4 of 4</span>
         <div class="slide-content">
-            <p class="mega green">Nice work.</p>
-            <div class="takeaways">
-                <div class="takeaway">
-                    <span class="check">✓</span>
-                    <span>You built a website</span>
-                </div>
-                <div class="takeaway">
-                    <span class="check">✓</span>
-                    <span>Without writing code</span>
-                </div>
+            <p class="large">Deploy with <span class="green">Snow</span></p>
+            <p class="body gray" style="margin-top: 16px;">Type this command in Claude Code</p>
+            <div class="command-box simple" style="margin-top: 40px;">
+                <code id="deployCommand">/snow-deploy</code>
+                <button class="copy-btn" onclick="copyCommand('deployCommand', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy</span>
+                </button>
             </div>
-            <a href="https://claude-code-guide-beta.vercel.app/" target="_blank" class="resource-link">
-                Claude Code Guide →
-            </a>
+            <div class="info-box" style="margin-top: 32px;">
+                <p><span class="icon">✓</span> Claude handles the entire deploy process</p>
+                <p><span class="icon">✓</span> You'll get a <strong style="color: var(--green);">snow.spotify.net</strong> URL to share</p>
+            </div>
         </div>
     </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img id="lightboxImg" src="" alt="Enlarged screenshot">
+    </div>
 
     <script>
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        document.querySelectorAll('.screenshot').forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox || e.target === lightboxClose) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
+            }
+        });
+
         const slides = document.querySelectorAll('.slide');
         const navDots = document.getElementById('navDots');
         const slideCounter = document.getElementById('slideCounter');
