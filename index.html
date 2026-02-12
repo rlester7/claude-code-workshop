@@ -757,14 +757,7 @@
 
         /* Nav */
         .nav-dots {
-            position: fixed;
-            right: 24px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            z-index: 100;
+            display: none;
         }
 
         .nav-dot {
@@ -787,8 +780,13 @@
             left: 24px;
             font-size: 14px;
             font-weight: 800;
-            color: #333;
+            color: #555;
             z-index: 100;
+            transition: left 0.3s ease;
+        }
+
+        .sidebar.open ~ .slide-counter {
+            left: 340px;
         }
 
         /* Section label */
@@ -796,12 +794,132 @@
             position: absolute;
             top: 24px;
             left: 24px;
+            transition: left 0.3s ease;
             font-size: 12px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: var(--gray);
             z-index: 10;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            top: var(--nav-height);
+            left: 0;
+            width: 320px;
+            height: calc(100vh - var(--nav-height));
+            background: rgba(17, 17, 17, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid #222;
+            z-index: 500;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            padding: 24px 0;
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar.open ~ .slide .section-label {
+            left: 340px;
+        }
+
+        .sidebar-section {
+            padding: 0 20px;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-section-title {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #666;
+            padding: 16px 0 10px;
+            border-bottom: 1px solid #222;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border-left: 3px solid transparent;
+            margin: 2px 0;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-item.active {
+            background: rgba(29, 185, 84, 0.08);
+            border-left-color: var(--green);
+        }
+
+        .sidebar-item-num {
+            font-size: 12px;
+            font-weight: 800;
+            color: #555;
+            min-width: 20px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .sidebar-item.active .sidebar-item-num {
+            color: var(--green);
+        }
+
+        .sidebar-item-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #aaa;
+            line-height: 1.3;
+        }
+
+        .sidebar-item.active .sidebar-item-title {
+            color: var(--white);
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            top: 60px;
+            left: 16px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            color: var(--white);
+            cursor: pointer;
+            z-index: 501;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-toggle:hover {
+            border-color: var(--green);
+            background: #222;
+        }
+
+        .sidebar-toggle.shifted {
+            left: 336px;
+        }
+
+        .sidebar-toggle svg {
+            width: 20px;
+            height: 20px;
         }
 
         /* Responsive */
@@ -843,6 +961,11 @@
                 display: none;
             }
 
+            .sidebar,
+            .sidebar-toggle {
+                display: none;
+            }
+
             .logo-compare {
                 flex-direction: column;
                 gap: 24px;
@@ -864,13 +987,93 @@
     <nav class="top-nav">
         <a href="index.html" class="nav-tab active">Install</a>
         <a href="workshop.html" class="nav-tab">Workshop</a>
-        <a href="reference.html" class="nav-tab">Reference</a>
         <a href="deploy.html" class="nav-tab">Share (Deploy)</a>
+        <a href="reference.html" class="nav-tab">Reference</a>
         <a href="installation-helper.html" class="nav-tab">Help</a>
     </nav>
 
     <nav class="nav-dots" id="navDots"></nav>
-    <div class="slide-counter" id="slideCounter">01 / 16</div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Introduction</div>
+            <div class="sidebar-item active" data-slide="0">
+                <span class="sidebar-item-num">01</span>
+                <span class="sidebar-item-title">Claude Code Workshop</span>
+            </div>
+            <div class="sidebar-item" data-slide="1">
+                <span class="sidebar-item-num">02</span>
+                <span class="sidebar-item-title">AI that builds things for you</span>
+            </div>
+            <div class="sidebar-item" data-slide="2">
+                <span class="sidebar-item-num">03</span>
+                <span class="sidebar-item-title">ChatGPT vs Claude</span>
+            </div>
+            <div class="sidebar-item" data-slide="3">
+                <span class="sidebar-item-num">04</span>
+                <span class="sidebar-item-title">What makes it different</span>
+            </div>
+            <div class="sidebar-item" data-slide="4">
+                <span class="sidebar-item-num">05</span>
+                <span class="sidebar-item-title">Let's get you set up</span>
+            </div>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Installation</div>
+            <div class="sidebar-item" data-slide="5">
+                <span class="sidebar-item-num">06</span>
+                <span class="sidebar-item-title">Join the group</span>
+            </div>
+            <div class="sidebar-item" data-slide="6">
+                <span class="sidebar-item-num">07</span>
+                <span class="sidebar-item-title">Install Step 1</span>
+            </div>
+            <div class="sidebar-item" data-slide="7">
+                <span class="sidebar-item-num">08</span>
+                <span class="sidebar-item-title">The script stops 3 times</span>
+            </div>
+            <div class="sidebar-item" data-slide="8">
+                <span class="sidebar-item-num">09</span>
+                <span class="sidebar-item-title">Install Step 2</span>
+            </div>
+            <div class="sidebar-item" data-slide="9">
+                <span class="sidebar-item-num">10</span>
+                <span class="sidebar-item-title">Browser authentication</span>
+            </div>
+            <div class="sidebar-item" data-slide="10">
+                <span class="sidebar-item-num">11</span>
+                <span class="sidebar-item-title">Install Step 3</span>
+            </div>
+            <div class="sidebar-item" data-slide="11">
+                <span class="sidebar-item-num">12</span>
+                <span class="sidebar-item-title">Verify installation</span>
+            </div>
+            <div class="sidebar-item" data-slide="12">
+                <span class="sidebar-item-num">13</span>
+                <span class="sidebar-item-title">PATH fix</span>
+            </div>
+            <div class="sidebar-item" data-slide="13">
+                <span class="sidebar-item-num">14</span>
+                <span class="sidebar-item-title">Troubleshooting FAQ</span>
+            </div>
+            <div class="sidebar-item" data-slide="14">
+                <span class="sidebar-item-num">15</span>
+                <span class="sidebar-item-title">Ready for Workshop</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <div class="slide-counter" id="slideCounter">01 / 15</div>
 
     <!-- ============================================ -->
     <!-- SECTION 1: HOOK & SETUP (Slides 1-5) -->
@@ -1154,26 +1357,55 @@
 
     <script>
         const slides = document.querySelectorAll('.slide');
-        const navDots = document.getElementById('navDots');
         const slideCounter = document.getElementById('slideCounter');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
         const total = slides.length;
+        let currentSlide = 0;
 
-        slides.forEach((_, i) => {
-            const dot = document.createElement('div');
-            dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
-            dot.onclick = () => scrollTo(i);
-            navDots.appendChild(dot);
+        // Default open on landscape/desktop screens
+        if (window.innerWidth >= 1024) {
+            sidebar.classList.add('open');
+            sidebarToggle.classList.add('shifted');
+        }
+
+        // Sidebar toggle
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            sidebarToggle.classList.toggle('shifted');
         });
 
-        const dots = document.querySelectorAll('.nav-dot');
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (sidebar.classList.contains('open') &&
+                !sidebar.contains(e.target) &&
+                !sidebarToggle.contains(e.target)) {
+                sidebar.classList.remove('open');
+                sidebarToggle.classList.remove('shifted');
+            }
+        });
 
-        function scrollTo(i) {
+        // Sidebar item click → navigate to slide
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const idx = parseInt(item.dataset.slide);
+                navigateTo(idx);
+            });
+        });
+
+        function navigateTo(i) {
             slides[i].scrollIntoView({ behavior: 'smooth' });
         }
 
         function update(i) {
-            slideCounter.textContent = `${String(i + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
-            dots.forEach((d, j) => d.classList.toggle('active', j === i));
+            currentSlide = i;
+            const activeItem = document.querySelector(`.sidebar-item[data-slide="${i}"]`);
+            const title = activeItem ? activeItem.querySelector('.sidebar-item-title').textContent : '';
+            slideCounter.textContent = `${String(i + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}  ·  ${title}`;
+            sidebarItems.forEach(item => {
+                item.classList.toggle('active', parseInt(item.dataset.slide) === i);
+            });
         }
 
         const obs = new IntersectionObserver((entries) => {
@@ -1184,14 +1416,14 @@
 
         slides.forEach(s => obs.observe(s));
 
+        // Keyboard navigation
         document.addEventListener('keydown', (e) => {
-            const curr = Array.from(dots).findIndex(d => d.classList.contains('active'));
             if (['ArrowDown', 'ArrowRight', ' '].includes(e.key)) {
                 e.preventDefault();
-                if (curr < total - 1) scrollTo(curr + 1);
+                if (currentSlide < total - 1) navigateTo(currentSlide + 1);
             } else if (['ArrowUp', 'ArrowLeft'].includes(e.key)) {
                 e.preventDefault();
-                if (curr > 0) scrollTo(curr - 1);
+                if (currentSlide > 0) navigateTo(currentSlide - 1);
             }
         });
 
