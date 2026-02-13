@@ -571,10 +571,18 @@
             </div>
             <div class="sidebar-item" data-slide="3">
                 <span class="sidebar-item-num">04</span>
-                <span class="sidebar-item-title">Install the Snow skill</span>
+                <span class="sidebar-item-title">Join GHE Users</span>
             </div>
             <div class="sidebar-item" data-slide="4">
                 <span class="sidebar-item-num">05</span>
+                <span class="sidebar-item-title">Install GitHub CLI</span>
+            </div>
+            <div class="sidebar-item" data-slide="5">
+                <span class="sidebar-item-num">06</span>
+                <span class="sidebar-item-title">Install the Snow skill</span>
+            </div>
+            <div class="sidebar-item" data-slide="6">
+                <span class="sidebar-item-num">07</span>
                 <span class="sidebar-item-title">Deploy with Snow</span>
             </div>
         </div>
@@ -589,7 +597,7 @@
         </svg>
     </button>
 
-    <div class="slide-counter" id="slideCounter">01 / 05</div>
+    <div class="slide-counter" id="slideCounter">01 / 07</div>
 
     <!-- 1. Deploy Your Site -->
     <section class="slide">
@@ -615,7 +623,7 @@
 
     <!-- 2. Open IT Portal -->
     <section class="slide">
-        <span class="section-label">Step 1 of 4</span>
+        <span class="section-label">Step 1 of 6</span>
         <div class="slide-content">
             <p class="large">Go to the <span class="green">IT Portal</span></p>
             <p class="body gray" style="margin-top: 16px;">Click "Submit a Service Request"</p>
@@ -631,7 +639,7 @@
 
     <!-- 3. Fill out Access Request -->
     <section class="slide">
-        <span class="section-label">Step 2 of 4</span>
+        <span class="section-label">Step 2 of 6</span>
         <div class="slide-content">
             <p class="large">Request access to <span class="green">"Tech"</span></p>
             <p class="body gray" style="margin-top: 16px;">Select "Access Request", then choose "Tech" from the dropdown</p>
@@ -644,9 +652,51 @@
         </div>
     </section>
 
-    <!-- 4. Install the Snow Skill -->
+    <!-- 4. Join GHE Users Group -->
     <section class="slide">
-        <span class="section-label">Step 3 of 4</span>
+        <span class="section-label">Step 3 of 6</span>
+        <div class="slide-content">
+            <p class="large">Join the <span class="green">GHE Users</span> group</p>
+            <p class="body gray" style="margin-top: 16px;">This gives you access to GitHub Enterprise at Spotify</p>
+            <div style="margin-top: 40px;">
+                <a href="https://backstage.spotify.net/bandmanager/ghe-users@spotify.com" target="_blank" class="resource-link pulse">
+                    Join GHE Users
+                </a>
+            </div>
+            <div class="info-box" style="margin-top: 40px;">
+                <p><span class="icon">✓</span> Click the link above and hit "Join Group"</p>
+                <p><span class="icon">⏳</span> Access is usually instant but can take a few hours</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Install GitHub CLI -->
+    <section class="slide">
+        <span class="section-label">Step 4 of 6</span>
+        <div class="slide-content">
+            <p class="large">Install <span class="green">GitHub CLI</span></p>
+            <p class="body gray" style="margin-top: 16px;">Instruct Claude to:</p>
+            <div class="command-box" style="margin-top: 40px;">
+                <code id="ghCliCommand">Install the github CLI and authenticate this machine for GHE</code>
+                <button class="copy-btn" onclick="copyCommand('ghCliCommand', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy</span>
+                </button>
+            </div>
+            <div class="info-box" style="margin-top: 32px;">
+                <p><span class="icon">✓</span> Paste this into Claude Code and let it handle the rest</p>
+                <p><span class="icon">✓</span> Say "yes" when Claude asks for permission</p>
+                <p><span class="icon">🌐</span> A browser window will open — log in when prompted</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Install the Snow Skill -->
+    <section class="slide">
+        <span class="section-label">Step 5 of 6</span>
         <div class="slide-content">
             <p class="large">Install the <span class="green">Snow skill</span></p>
             <p class="body gray" style="margin-top: 16px;">Paste this into Claude Code - it will set everything up for you</p>
@@ -669,7 +719,7 @@
 
     <!-- 4. Deploy -->
     <section class="slide">
-        <span class="section-label">Step 4 of 4</span>
+        <span class="section-label">Step 6 of 6</span>
         <div class="slide-content">
             <p class="large">Deploy with <span class="green">Snow</span></p>
             <p class="body gray" style="margin-top: 16px;">Type this command in Claude Code</p>
