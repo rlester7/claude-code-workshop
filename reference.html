@@ -407,9 +407,10 @@
     <!-- Top Navigation -->
     <nav class="top-nav">
         <a href="index.html" class="nav-tab">Install</a>
+        <a href="migration.html" class="nav-tab">Migration</a>
         <a href="workshop.html" class="nav-tab">Workshop</a>
-        <a href="deploy.html" class="nav-tab">Share (Deploy)</a>
-        <a href="reference.html" class="nav-tab">Reference</a>
+        <a href="deploy.html" class="nav-tab">Deploy</a>
+        <a href="reference.html" class="nav-tab active">Reference</a>
         <a href="installation-helper.html" class="nav-tab">Help</a>
     </nav>
 
@@ -455,11 +456,7 @@
             </div>
             <div class="sidebar-item" data-slide="7">
                 <span class="sidebar-item-num">08</span>
-                <span class="sidebar-item-title">What is Homebrew?</span>
-            </div>
-            <div class="sidebar-item" data-slide="8">
-                <span class="sidebar-item-num">09</span>
-                <span class="sidebar-item-title">What is gcloud?</span>
+                <span class="sidebar-item-title">What is SSO?</span>
             </div>
         </div>
     </aside>
@@ -622,44 +619,24 @@
         </div>
     </section>
 
-    <!-- 9. What is Homebrew? -->
+    <!-- 9. What is SSO? -->
     <section class="slide">
-        <span class="section-label">CLI Basics</span>
+        <span class="section-label">Auth Basics</span>
         <div class="slide-content">
-            <img src="assets/images/logos/homebrew-logo.png" alt="Homebrew" class="slide-img" style="max-height: 25vh; margin-bottom: 24px;">
-            <p class="large">What is Homebrew?</p>
-            <p class="body gray" style="margin-top: 16px;">Installed during the setup process</p>
-            <div class="concept-list" style="margin-top: 32px;">
-                <div class="concept-item">
-                    <span class="concept-icon">🍺</span>
-                    <p class="concept-text">A package manager for Mac<span>It installs other software tools for you</span></p>
-                </div>
-                <div class="concept-item">
-                    <span class="concept-icon">🧱</span>
-                    <p class="concept-text">Think of it as an app store for developer tools<span>We need it to install gcloud and Claude Code</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 10. What is gcloud? -->
-    <section class="slide">
-        <span class="section-label">CLI Basics</span>
-        <div class="slide-content">
-            <img src="assets/images/logos/google-cloud-logo.webp" alt="Google Cloud" class="slide-img" style="max-height: 20vh; margin-bottom: 24px;">
-            <p class="large">What is gcloud?</p>
+            <p class="mega green" style="font-size: clamp(48px, 10vw, 120px);">🔐</p>
+            <p class="large" style="margin-top: 24px;">What is SSO?</p>
             <div class="concept-list">
                 <div class="concept-item">
                     <span class="concept-icon">🔑</span>
-                    <p class="concept-text">Lets you log into your Spotify account<span>It's how Claude knows you're authorized</span></p>
+                    <p class="concept-text">Single Sign-On — log in once with Spotify<span>Instead of a separate password, Spotify vouches for you</span></p>
                 </div>
                 <div class="concept-item">
-                    <span class="concept-icon">🔒</span>
-                    <p class="concept-text">Required so Claude can access Spotify tools<span>On your behalf, with your permissions</span></p>
+                    <span class="concept-icon">🏢</span>
+                    <p class="concept-text">It's how Claude knows you're a Spotify employee<span>Your @spotify.com login is the authorization</span></p>
                 </div>
                 <div class="concept-item">
                     <span class="concept-icon">🌐</span>
-                    <p class="concept-text">One-time authentication<span>A browser window opens for sign-in</span></p>
+                    <p class="concept-text">You set it up once in the browser<span>Go to claude.ai → Continue with SSO → done</span></p>
                 </div>
             </div>
         </div>

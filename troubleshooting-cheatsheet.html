@@ -383,15 +383,15 @@
     <h2><span class="emoji">📋</span> Pre-Flight Checklist</h2>
     <p>Before the workshop, attendees should have:</p>
     <ul class="prereq-list">
-        <li><span class="prereq-check"></span> Joined "Claude Code Users" group in Band Manager</li>
+        <li><span class="prereq-check"></span> Joined "okta-c4e-chat-and-code-users" group in Band Manager</li>
         <li><span class="prereq-check"></span> Mac laptop (required)</li>
         <li><span class="prereq-check"></span> @spotify.com email ready for sign-in</li>
         <li><span class="prereq-check"></span> 3-5 images saved locally for their presentation topic</li>
-        <li><span class="prereq-check"></span> Admin password for their Mac (may be needed for Homebrew)</li>
+        <li><span class="prereq-check"></span> Admin password for their Mac (may be needed during installation)</li>
     </ul>
 
     <div class="warning" style="margin-bottom: 32px;">
-        <strong>IMPORTANT:</strong> The install script requires running 2-3 times. This is BY DESIGN! It installs one component at a time (Homebrew → gcloud → Claude Code), exiting after each so components can initialize. Just run the same curl command again each time it stops.
+        <strong>IMPORTANT:</strong> The install script runs once and installs Claude Code + Skills. After it finishes, you'll need to log in via SSO (see below).
     </div>
 
     <h2><span class="emoji">🚨</span> Common Installation Issues</h2>
@@ -405,7 +405,7 @@
             <p>The script exits after installing each component. This is NORMAL and BY DESIGN, not a bug!</p>
             <div class="solution">
                 <strong>Solution</strong>
-                Run the same curl command again. Run 1 = Homebrew, Run 2 = gcloud, Run 3 = Claude Code + Skills.
+                Run the same curl command again. It's safe to re-run — it will pick up where it left off.
             </div>
         </div>
 
@@ -436,36 +436,36 @@
         <div class="card">
             <p class="card-title">
                 <span class="icon red">!</span>
-                gcloud auth - browser doesn't open
+                SSO login — not seeing Spotify org
             </p>
-            <p>During gcloud authentication, a browser window should open automatically for sign-in.</p>
+            <p>When visiting claude.ai, the user doesn't see the option to select Spotify as their organization.</p>
             <div class="solution">
                 <strong>Solution</strong>
-                Look for a URL in Terminal starting with https://accounts.google.com — copy and paste it into your browser manually.
+                Disable adblockers (uBlock etc.) on claude.ai. Try incognito mode. Make sure they've joined the "okta-c4e-chat-and-code-users" group in Band Manager. Group sync can take 4-6 hours — try logging out of spotify.okta.com and back in.
             </div>
         </div>
 
         <div class="card">
             <p class="card-title">
                 <span class="icon red">!</span>
-                gcloud auth - "Access Denied" or permission error
+                /login not working in Claude Code
             </p>
-            <p>User gets an error during Google authentication.</p>
+            <p>The /login command in Claude Code doesn't show the right options or fails.</p>
             <div class="solution">
                 <strong>Solution</strong>
-                Make sure they've joined the "Claude Code Users" group in Band Manager first. Access can take a few hours to propagate.
+                Complete the claude.ai SSO login in browser first. Then close Terminal (Cmd+Q), reopen, and try <code>/login</code> again. Select "Claude account with subscription". Try 2-3 times — this is a known quirk.
             </div>
         </div>
 
         <div class="card">
             <p class="card-title">
                 <span class="icon red">!</span>
-                "gcloud not found" after first run
+                /status shows wrong account or "Not logged in"
             </p>
-            <p>The first run only installed Homebrew. gcloud hasn't been installed yet.</p>
+            <p>After running /login, /status doesn't show "Organization: Spotify".</p>
             <div class="solution">
                 <strong>Solution</strong>
-                Run the curl command again. The second run installs gcloud.
+                Go back to claude.ai and make sure the Spotify org is selected (not a personal account). Run <code>/login</code> again and choose "Claude account with subscription".
             </div>
         </div>
 
@@ -591,15 +591,28 @@ source ~/.zshrc</div>
     </div>
 
     <h2><span class="emoji">📦</span> What the Installer Does</h2>
-    <p>The script installs components one at a time, requiring 2-3 runs:</p>
+    <p>The script runs once and installs everything:</p>
     <ol class="steps">
-        <li><strong>Run 1: Homebrew</strong> — Mac package manager (if not already installed). Script exits after this.</li>
-        <li><strong>Run 2: gcloud</strong> — Google Cloud CLI for Spotify authentication. Browser auth happens here. Script exits after this.</li>
-        <li><strong>Run 3: Claude Code + Skills</strong> — The main CLI tool and custom skills (<code>/create-presentation-site</code>, <code>/frontend-design</code>).</li>
+        <li><strong>Claude Code</strong> — The main CLI tool</li>
+        <li><strong>Skills</strong> — Custom skills (<code>/create-presentation-site</code>, <code>/frontend-design</code>, <code>/create-moodboard</code>, <code>/marketing-experience</code>)</li>
     </ol>
 
     <div class="warning">
-        <strong>Important:</strong> The script exiting after each component is NORMAL. Just run the same curl command again. Full installation takes 5-10 minutes total across all runs.
+        <strong>Important:</strong> If the script stops or fails, it's safe to run again — it will pick up where it left off. Full installation takes about 5 minutes.
+    </div>
+
+    <h2><span class="emoji">🔐</span> SSO Login (After Install)</h2>
+    <p>After the script finishes, users need to complete SSO login:</p>
+    <ol class="steps">
+        <li>Open <strong>claude.ai</strong> in browser (disable adblockers first!)</li>
+        <li>Enter @spotify.com email → click <strong>"Continue with SSO"</strong></li>
+        <li>Select <strong>"Spotify"</strong> as the organization (NOT a personal account)</li>
+        <li>In Terminal, type <code>/login</code> in Claude Code</li>
+        <li>Select <strong>"Claude account with subscription"</strong></li>
+        <li>Verify with <code>/status</code> — should show "Organization: Spotify"</li>
+    </ol>
+    <div class="warning">
+        <strong>Note:</strong> The /login command may need to be run 2-3 times. This is a known quirk. If group access isn't working, the user may need to wait 4-6 hours after joining the Band Manager group, or log out of spotify.okta.com and back in.
     </div>
 
     <h2><span class="emoji">🆘</span> Escape Hatches</h2>

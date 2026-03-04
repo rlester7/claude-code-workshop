@@ -700,32 +700,36 @@
 curl -fsSL https://gist.githubusercontent.com/rlester7/89dd039a98121333dae739064c3f7225/raw/install.sh | bash
 \`\`\`
 
-## CRITICAL: The Script Requires Multiple Runs
-The install script installs components ONE AT A TIME and exits after each component. This is BY DESIGN, not a bug!
+## What the Script Does
+The install script runs once and installs everything:
+1. Claude Code itself
+2. Skills: \`/create-presentation-site\`, \`/frontend-design\`, \`/create-moodboard\`, and \`/marketing-experience\`
 
-**Run 1:** Installs Homebrew (package manager)
-**Run 2:** Installs gcloud (Google Cloud CLI for Spotify auth)
-**Run 3:** Installs Claude Code + Skills
+After the script finishes, users need to log in via SSO (see below).
 
-Users should run the SAME curl command 2-3 times until everything is installed. Each time it picks up where it left off.
+## SSO Login (after install)
+After the script finishes, users need to log in via SSO:
+1. Open claude.ai in browser (disable adblockers like uBlock first!)
+2. Enter your @spotify.com email → click "Continue with SSO"
+3. Select "Spotify" as the organization (do NOT select a personal account)
+4. Back in Terminal, type \`/login\` in Claude Code
+5. Select "Claude account with subscription"
+6. Verify with \`/status\` — should show "Organization: Spotify"
 
-## What Gets Installed (in order)
-1. Homebrew (Mac package manager) - if not already installed
-2. gcloud (Google Cloud CLI for Spotify authentication)
-3. Claude Code itself
-4. Spotify/Vertex AI configuration
-5. Skills: \`/create-presentation-site\` and \`/frontend-design\`
+Note: The /login command sometimes needs to be run 2-3 times. This is a known quirk.
+
+## Bandmanager Group
+Users must be a member of the okta-c4e-chat-and-code-users group:
+https://backstage.spotify.net/bandmanager/okta-c4e-chat-and-code-users@spotify.com
+Group access can take 4-6 hours to sync between Band Manager and Okta.
 
 ## Common Issues & Solutions
-
-### "The script stopped/exited" - THIS IS NORMAL
-The script exits after each component so it can initialize properly. Just run the same curl command again! This is the most common "issue" and it's not actually a problem.
 
 ### Password Entry is Invisible
 This is normal! When typing your Mac password in Terminal, no characters appear (not even dots). Just type your password and press Enter.
 
 ### "command not found" Error
-After installation completes all 3 runs, you need to restart Terminal:
+After installation completes, you need to restart Terminal:
 1. Press Cmd+Q to fully quit Terminal
 2. Reopen Terminal
 3. Try typing \`claude\` again
@@ -738,25 +742,35 @@ source ~/.zshrc
 ### Installer Seems Stuck
 - Be patient - it's downloading dependencies
 - If truly stuck for 5+ minutes, press Ctrl+C to cancel
-- Run the installer again - it will resume where it left off
+- Run the installer again - it's safe to re-run
 
 ### Ctrl+C to Cancel
 If anything goes wrong or hangs, press Ctrl+C to stop the current process. You can always start over.
 
-### gcloud Authentication Issues
-- A browser window should open automatically for Google sign-in
-- If it doesn't open, look for a URL in the Terminal output and copy/paste it into your browser
-- Sign in with your @spotify.com email
-- Click "Allow" when prompted
-- Return to Terminal after authenticating
+### SSO Login — Not Seeing Spotify Org
+- Disable all browser extensions (especially adblockers like uBlock)
+- Try using an incognito/private browser window
+- Make sure you've joined the okta-c4e-chat-and-code-users group in Band Manager
+- If you just joined the group, log out of spotify.okta.com and log back in
 
-### "gcloud not found" after installation
-Run the same curl command again - the first run likely just installed Homebrew and gcloud wasn't installed yet.
+### SSO Login — /login Not Working in Claude Code
+- Make sure you completed the claude.ai SSO login in your browser first
+- Close Terminal completely (Cmd+Q), reopen, and try /login again
+- Select "Claude account with subscription" when prompted
+- Try running /login 2-3 times if it doesn't work immediately
 
-### Browser Auth Window Doesn't Open
-Look in the Terminal for a URL that starts with https://accounts.google.com - copy and paste it into your browser manually.
+### /status Shows Wrong Account
+- Go back to claude.ai and make sure the Spotify org is selected (not a personal account)
+- Run /login again and select "Claude account with subscription"
 
-## After Installation (all 3 runs complete)
+## Migrating from Vertex AI (for existing users)
+If someone already had Claude Code installed via the old Vertex AI method:
+1. They need to remove Vertex settings from ~/.claude/settings.json (empty the "env" block)
+2. Close all terminals, open a fresh one
+3. Follow the SSO login steps above
+4. TIP: They can also just paste the migration instructions into Claude Code and let it handle the cleanup!
+
+## After Installation
 - Type \`claude\` to start Claude Code
 - Type \`/help\` to see all available commands
 - Type \`/resume\` to continue a previous session
@@ -766,7 +780,7 @@ Look in the Terminal for a URL that starts with https://accounts.google.com - co
 - Keep responses SHORT and actionable
 - Use code formatting for commands
 - Be encouraging - these are non-technical users
-- Emphasize that running the script multiple times is NORMAL and expected
+- The script runs once — if it fails, it's safe to re-run
 - If unsure, suggest they raise their hand for a helper or message @rlester`;
 
         // State

@@ -986,8 +986,9 @@
     <!-- Top Navigation -->
     <nav class="top-nav">
         <a href="index.html" class="nav-tab active">Install</a>
+        <a href="migration.html" class="nav-tab">Migration</a>
         <a href="workshop.html" class="nav-tab">Workshop</a>
-        <a href="deploy.html" class="nav-tab">Share (Deploy)</a>
+        <a href="deploy.html" class="nav-tab">Deploy</a>
         <a href="reference.html" class="nav-tab">Reference</a>
         <a href="installation-helper.html" class="nav-tab">Help</a>
     </nav>
@@ -1027,38 +1028,34 @@
             </div>
             <div class="sidebar-item" data-slide="6">
                 <span class="sidebar-item-num">07</span>
-                <span class="sidebar-item-title">Install Step 1</span>
+                <span class="sidebar-item-title">Run the installer</span>
             </div>
             <div class="sidebar-item" data-slide="7">
                 <span class="sidebar-item-num">08</span>
-                <span class="sidebar-item-title">The script stops 3 times</span>
+                <span class="sidebar-item-title">Log in at claude.ai</span>
             </div>
             <div class="sidebar-item" data-slide="8">
                 <span class="sidebar-item-num">09</span>
-                <span class="sidebar-item-title">Install Step 2</span>
+                <span class="sidebar-item-title">Open Terminal</span>
             </div>
             <div class="sidebar-item" data-slide="9">
                 <span class="sidebar-item-num">10</span>
-                <span class="sidebar-item-title">Browser authentication</span>
+                <span class="sidebar-item-title">PATH fix</span>
             </div>
             <div class="sidebar-item" data-slide="10">
                 <span class="sidebar-item-num">11</span>
-                <span class="sidebar-item-title">Install Step 3</span>
+                <span class="sidebar-item-title">Run /login</span>
             </div>
             <div class="sidebar-item" data-slide="11">
                 <span class="sidebar-item-num">12</span>
-                <span class="sidebar-item-title">Verify installation</span>
+                <span class="sidebar-item-title">Verify with /status</span>
             </div>
             <div class="sidebar-item" data-slide="12">
                 <span class="sidebar-item-num">13</span>
-                <span class="sidebar-item-title">PATH fix</span>
+                <span class="sidebar-item-title">Troubleshooting FAQ</span>
             </div>
             <div class="sidebar-item" data-slide="13">
                 <span class="sidebar-item-num">14</span>
-                <span class="sidebar-item-title">Troubleshooting FAQ</span>
-            </div>
-            <div class="sidebar-item" data-slide="14">
-                <span class="sidebar-item-num">15</span>
                 <span class="sidebar-item-title">Ready for Workshop</span>
             </div>
         </div>
@@ -1140,9 +1137,6 @@
         <div class="slide-content">
             <p class="large">Let's get you set up</p>
             <p class="body gray" style="margin-top: 16px;">Follow these steps to install Claude Code</p>
-            <div class="info-box" style="margin-top: 40px; text-align: center;">
-                <p style="color: var(--gray);"><strong style="color: var(--white);">You'll run the same command 2-3 times.</strong> Each time it installs one component and stops. That's normal!</p>
-            </div>
         </div>
     </section>
 
@@ -1152,12 +1146,13 @@
         <div class="slide-content">
             <p class="large">First step: Join the group</p>
             <p class="body gray" style="margin-top: 16px;">This gives you permission to use Claude Code at Spotify</p>
-            <a href="https://backstage.spotify.net/bandmanager/claude-code-users@spotify.com" target="_blank" class="action-link">
+            <a href="https://backstage.spotify.net/bandmanager/okta-c4e-chat-and-code-users@spotify.com" target="_blank" class="action-link">
                 Join Claude Code Users
             </a>
             <div class="info-box" style="margin-top: 40px;">
                 <p><span class="icon">✓</span> Click the link above and hit "Join Group"</p>
-                <p><span class="icon">⏳</span> Access can take a few hours to propagate (but usually instant)</p>
+                <p><span class="icon">⏳</span> Access can take up to 4-6 hours to sync (but usually much faster)</p>
+                <p><span class="icon">💡</span> If you just joined, try logging out of Okta and back in</p>
             </div>
         </div>
     </section>
@@ -1168,9 +1163,10 @@
 
     <!-- 6. COMMAND - Install Script -->
     <section class="slide">
-        <span class="section-label">Installation Step 1</span>
+        <span class="section-label">Installation</span>
         <div class="slide-content">
             <p class="large">Open Terminal. Paste this.</p>
+            <p class="small gray" style="margin-top: 8px;">Press <strong style="color: var(--white);">Cmd + Space</strong>, type <strong style="color: var(--white);">Terminal</strong>, press Enter</p>
             <div class="command-box">
                 <code id="installCommand1">curl -fsSL https://gist.githubusercontent.com/rlester7/89dd039a98121333dae739064c3f7225/raw/install.sh | bash</code>
                 <button class="copy-btn" onclick="copyCommand('installCommand1', this)">
@@ -1181,122 +1177,53 @@
                     <span>Copy</span>
                 </button>
             </div>
-            <div class="warning-box">
-                <p>You'll run this same command 2-3 times. That's expected!</p>
-                <p style="margin-top: 8px; color: var(--gray);">Each time it installs one component and stops.</p>
-            </div>
+            <p class="body gray" style="margin-top: 24px;">This installs Claude Code + special skills.</p>
             <a href="installation-helper.html" target="_blank" class="helper-link">Need help? Chat with our install assistant</a>
         </div>
     </section>
 
-    <!-- 8. Why It Stops - 3-run pattern -->
+    <!-- 10. SSO Login in Browser -->
     <section class="slide">
-        <span class="section-label">Important</span>
+        <span class="section-label">Sign In — Browser</span>
         <div class="slide-content">
-            <p class="large">The script stops 3 times</p>
-            <p class="body gray" style="margin-top: 16px;">This is normal! Just run the same command again.</p>
-            <div class="key-points-row" style="margin-top: 32px;">
-                <div class="key-point-item" style="border-color: var(--green);">
-                    <p class="key-point-num">Run 1</p>
-                    <p class="key-point-text">Installs <span class="green">Homebrew</span></p>
-                </div>
-                <div class="key-point-item" style="border-color: var(--green);">
-                    <p class="key-point-num">Run 2</p>
-                    <p class="key-point-text">Installs <span class="green">gcloud</span></p>
-                </div>
-                <div class="key-point-item" style="border-color: var(--green);">
-                    <p class="key-point-num">Run 3</p>
-                    <p class="key-point-text">Installs <span class="green">Claude Code</span></p>
-                </div>
-            </div>
-            <div class="info-box" style="margin-top: 32px; text-align: center;">
-                <p><strong>How do you know it stopped?</strong> You'll see your username and a <code>$</code> prompt with nothing else happening.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 9. COMMAND - Re-run for gcloud -->
-    <section class="slide">
-        <span class="section-label">Installation Step 2</span>
-        <div class="slide-content">
-            <p class="large">Same command again:</p>
-            <div class="command-box">
-                <code id="installCommand2">curl -fsSL https://gist.githubusercontent.com/rlester7/89dd039a98121333dae739064c3f7225/raw/install.sh | bash</code>
-                <button class="copy-btn" onclick="copyCommand('installCommand2', this)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                    <span>Copy</span>
-                </button>
-            </div>
-            <p class="body gray" style="margin-top: 24px;">This time it's installing Google Cloud tools.</p>
-        </div>
-    </section>
-
-    <!-- 8. COMMAND - Browser Auth -->
-    <section class="slide">
-        <span class="section-label">Authentication</span>
-        <div class="slide-content">
-            <p class="mega green" style="font-size: clamp(48px, 10vw, 120px);">🌐</p>
-            <p class="large" style="margin-top: 24px;">A browser window should open</p>
+            <p class="large">Log in at claude.ai</p>
             <div class="concept-list" style="margin-top: 40px;">
                 <div class="concept-item">
                     <span class="concept-icon">1</span>
-                    <p class="concept-text">Log in with your <span class="green" style="display: inline;">@spotify.com</span> email</p>
+                    <p class="concept-text">Open <span class="green" style="display: inline;">claude.ai</span> in your browser<span>Disable adblockers (uBlock etc.) first</span></p>
                 </div>
                 <div class="concept-item">
                     <span class="concept-icon">2</span>
-                    <p class="concept-text">Click "Allow" when prompted</p>
+                    <p class="concept-text">Enter your <span class="green" style="display: inline;">@spotify.com</span> email<span>Click "Continue with SSO"</span></p>
                 </div>
                 <div class="concept-item">
                     <span class="concept-icon">3</span>
-                    <p class="concept-text">Return to Terminal</p>
+                    <p class="concept-text">Select <span class="green" style="display: inline;">Spotify</span> as your organization<span>Do NOT select a personal account if you have one</span></p>
                 </div>
             </div>
-            <p class="small gray" style="margin-top: 32px;">If it doesn't open, look for a link in Terminal and click it.</p>
         </div>
     </section>
 
-    <!-- 13. COMMAND - Re-run for Claude Code -->
+    <!-- 11. Open Terminal and Launch Claude Code -->
     <section class="slide">
-        <span class="section-label">Installation Step 3</span>
+        <span class="section-label">Sign In — Terminal</span>
         <div class="slide-content">
-            <p class="large">One more time:</p>
-            <div class="command-box">
-                <code id="installCommand3">curl -fsSL https://gist.githubusercontent.com/rlester7/89dd039a98121333dae739064c3f7225/raw/install.sh | bash</code>
-                <button class="copy-btn" onclick="copyCommand('installCommand3', this)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                    <span>Copy</span>
-                </button>
+            <p class="large">Back to Terminal</p>
+            <p class="body gray" style="margin-top: 16px;">The same app you used to run the installer</p>
+            <div class="concept-list" style="margin-top: 40px;">
+                <div class="concept-item">
+                    <span class="concept-icon">1</span>
+                    <p class="concept-text">Open <span class="green" style="display: inline;">Terminal</span><span>Press Cmd + Space, type "Terminal", press Enter</span></p>
+                </div>
+                <div class="concept-item">
+                    <span class="concept-icon">2</span>
+                    <p class="concept-text">Type <code style="font-family: 'SF Mono', monospace; color: var(--green); background: rgba(29,185,84,0.1); padding: 2px 8px; border-radius: 4px;">claude</code> and press Enter<span>Claude Code should start up, go through the setup flow</span></p>
+                </div>
             </div>
-            <p class="body gray" style="margin-top: 24px;">This installs Claude Code + some special skills.</p>
         </div>
     </section>
 
-    <!-- 10. COMMAND - Verify Installation -->
-    <section class="slide">
-        <span class="section-label">Verify</span>
-        <div class="slide-content">
-            <p class="large">Type this to check it worked:</p>
-            <div class="command-box simple">
-                <code id="verifyCommand">claude</code>
-                <button class="copy-btn" onclick="copyCommand('verifyCommand', this)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                    <span>Copy</span>
-                </button>
-            </div>
-            <p class="body" style="margin-top: 32px;">You should see Claude Code start up!</p>
-        </div>
-    </section>
-
-    <!-- 11. If Claude doesn't open -->
+    <!-- PATH fix — if claude command not found -->
     <section class="slide">
         <span class="section-label">Troubleshooting</span>
         <div class="slide-content">
@@ -1313,6 +1240,39 @@
                 </button>
             </div>
             <p class="body" style="margin-top: 32px;">Then type <code style="font-family: 'SF Mono', monospace; background: rgba(29,185,84,0.2); padding: 4px 8px; border-radius: 4px; color: var(--green);">claude</code> to start!</p>
+        </div>
+    </section>
+
+    <!-- Run /login -->
+    <section class="slide">
+        <span class="section-label">Sign In — /login</span>
+        <div class="slide-content">
+            <p class="large">Type <code style="font-family: 'SF Mono', monospace; color: var(--green); background: rgba(29,185,84,0.1); padding: 4px 12px; border-radius: 4px; font-size: inherit;">/login</code></p>
+            <p class="body gray" style="margin-top: 16px;">Select <span class="green">"Claude account with subscription"</span></p>
+            <img src="assets/images/ClaudeCodeLogin.png" alt="Screenshot of Claude Code with /login command" style="margin-top: 32px; max-width: 600px; width: 100%; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+            <div class="info-box" style="margin-top: 24px; text-align: center;">
+                <p style="color: var(--gray);">If /login doesn't work the first time, try it 2-3 times. This is a known quirk.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Verify Installation -->
+    <section class="slide">
+        <span class="section-label">Verify</span>
+        <div class="slide-content">
+            <p class="large">Check it worked</p>
+            <p class="body gray" style="margin-top: 16px;">Still in Claude Code, type:</p>
+            <div class="command-box simple" style="margin-top: 24px;">
+                <code id="verifyCommand">/status</code>
+                <button class="copy-btn" onclick="copyCommand('verifyCommand', this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy</span>
+                </button>
+            </div>
+            <p class="body" style="margin-top: 32px;">You should see: <span class="green">Organization: Spotify</span></p>
         </div>
     </section>
 
